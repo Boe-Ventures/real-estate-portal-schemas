@@ -1,0 +1,108 @@
+{
+  "name": "@use_homi/real-estate-portal-schemas",
+  "version": "0.1.0",
+  "description": "Verified query parameter schemas for real estate portals. Zod-based, AI-friendly, with serializers for Finn.no, Zillow, StreetEasy, Hybel.no, Airbnb, Rightmove, Property24, and more.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./finn-no": {
+      "types": "./dist/finn-no.d.ts",
+      "default": "./dist/finn-no.js"
+    },
+    "./zillow": {
+      "types": "./dist/zillow-com.d.ts",
+      "default": "./dist/zillow-com.js"
+    },
+    "./streeteasy": {
+      "types": "./dist/streeteasy-com.d.ts",
+      "default": "./dist/streeteasy-com.js"
+    },
+    "./hybel-no": {
+      "types": "./dist/hybel-no.d.ts",
+      "default": "./dist/hybel-no.js"
+    },
+    "./airbnb": {
+      "types": "./dist/airbnb-com.d.ts",
+      "default": "./dist/airbnb-com.js"
+    },
+    "./rightmove": {
+      "types": "./dist/rightmove-co-uk.d.ts",
+      "default": "./dist/rightmove-co-uk.js"
+    },
+    "./property24": {
+      "types": "./dist/property24-com.d.ts",
+      "default": "./dist/property24-com.js"
+    },
+    "./base-urls": {
+      "types": "./dist/base-urls.d.ts",
+      "default": "./dist/base-urls.js"
+    },
+    "./craigslist": {
+      "types": "./dist/craigslist-org.d.ts",
+      "default": "./dist/craigslist-org.js"
+    },
+    "./domain-au": {
+      "types": "./dist/domain-com-au.d.ts",
+      "default": "./dist/domain-com-au.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "pnpm run clean && pnpm run build"
+  },
+  "keywords": [
+    "real-estate",
+    "property",
+    "search",
+    "zillow",
+    "airbnb",
+    "rightmove",
+    "finn.no",
+    "streeteasy",
+    "portal",
+    "query-parameters",
+    "url-builder",
+    "zod",
+    "schema",
+    "ai",
+    "structured-output"
+  ],
+  "author": "Homi <hello@homi.so> (https://homi.so)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boe-ventures/real-estate-portal-schemas.git"
+  },
+  "homepage": "https://homi.so",
+  "bugs": {
+    "url": "https://github.com/boe-ventures/real-estate-portal-schemas/issues"
+  },
+  "dependencies": {
+    "zod": "^3.24.0 || ^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0"
+  },
+  "peerDependencies": {
+    "zod": ">=3.23.0 || >=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "zod": {
+      "optional": false
+    }
+  }
+}
