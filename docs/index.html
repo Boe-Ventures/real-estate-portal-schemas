@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Estate Portal Schemas — Verified URL Parameters for Property Search</title>
+  <meta name="description" content="Open-source query parameter schemas for Zillow, Airbnb, Finn.no, Rightmove, StreetEasy, and more. Build parameterized search URLs for 9 real estate portals across 6 countries.">
+  <meta name="keywords" content="real estate, property search, zillow api, airbnb search url, rightmove parameters, finn.no query params, streeteasy filters, zod schema, typescript, ai agents">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Real Estate Portal Schemas">
+  <meta property="og:description" content="Verified URL parameter schemas for 9 real estate portals. Zod-based, AI-optimized.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://boe-ventures.github.io/real-estate-portal-schemas/">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Real Estate Portal Schemas">
+  <meta name="twitter:description" content="Verified URL parameter schemas for 9 real estate portals across 6 countries.">
+
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --fg: #e5e5e5;
+      --muted: #737373;
+      --accent: #3b82f6;
+      --accent-hover: #60a5fa;
+      --border: #262626;
+      --card-bg: #141414;
+      --code-bg: #1c1c1c;
+      --green: #22c55e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 600px;
+    }
+
+    .badges {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .badges img {
+      height: 22px;
+    }
+
+    /* Install */
+    .install {
+      margin: 32px 0;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.9rem;
+      color: var(--green);
+      user-select: all;
+    }
+
+    /* Portal Grid */
+    .portals {
+      padding: 48px 0;
+    }
+
+    .portals h2 {
+      font-size: 1.4rem;
+      margin-bottom: 24px;
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .portal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: border-color 0.2s;
+    }
+
+    .portal-card:hover {
+      border-color: var(--accent);
+    }
+
+    .portal-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .portal-card .country {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+
+    .portal-card .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .tag.green {
+      color: var(--green);
+      border-color: #166534;
+      background: #052e16;
+    }
+
+    /* Features */
+    .features {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .features h2 {
+      font-size: 1.4rem;
+      margin-bottom: 24px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .feature h3 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .feature p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Code example */
+    .example {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .example h2 {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+    }
+
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    code { color: var(--fg); }
+    .keyword { color: #c084fc; }
+    .string { color: #86efac; }
+    .comment { color: #525252; }
+    .fn { color: #60a5fa; }
+
+    /* Footer */
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--accent-hover);
+    }
+
+    .links {
+      display: flex;
+      gap: 24px;
+      margin-top: 12px;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🏠 Real Estate Portal Schemas</h1>
+      <p>Verified query parameter schemas for 9 real estate portals across 6 countries. Zod-based. AI-optimized. Open source.</p>
+      <div class="badges">
+        <a href="https://www.npmjs.com/package/@use_homi/real-estate-portal-schemas"><img src="https://img.shields.io/npm/v/@use_homi/real-estate-portal-schemas?color=blue&label=npm" alt="npm version"></a>
+        <a href="https://github.com/Boe-Ventures/real-estate-portal-schemas"><img src="https://img.shields.io/github/stars/Boe-Ventures/real-estate-portal-schemas?style=social" alt="GitHub stars"></a>
+        <a href="https://github.com/Boe-Ventures/real-estate-portal-schemas/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@use_homi/real-estate-portal-schemas" alt="license"></a>
+      </div>
+    </header>
+
+    <div class="install">npm install @use_homi/real-estate-portal-schemas</div>
+
+    <section class="portals">
+      <h2>Supported Portals</h2>
+      <div class="portal-grid">
+        <div class="portal-card">
+          <h3>Finn.no</h3>
+          <div class="country">🇳🇴 Norway</div>
+          <div class="tags">
+            <span class="tag green">Buy</span>
+            <span class="tag green">Rent</span>
+            <span class="tag">30+ params</span>
+            <span class="tag">39 neighborhoods</span>
+          </div>
+        </div>
+        <div class="portal-card">
+          <h3>Zillow</h3>
+          <div class="country">🇺🇸 United States</div>
+          <div class="tags">
+            <span class="tag green">Buy</span>
+            <span class="tag green">Rent</span>
+            <span class="tag">37 filters</span>
+            <span class="tag">JSON blob</span>
+          </div>
+        </div>
+        <div class="portal-card">
+          <h3>StreetEasy</h3>
+          <div class="country">🇺🇸 New York City</div>
+          <div class="tags">
+            <span class="tag green">Buy</span>
+            <span class="tag green">Rent</span>
+            <span class="tag">Path DSL</span>
+            <span class="tag">25+ neighborhoods</span>
+          </div>
+        </div>
+        <div class="portal-card">
+          <h3>Airbnb</h3>
+          <div class="country">🌍 Global</div>
+          <div class="tags">
+            <span class="tag green">Rent</span>
+            <span class="tag green">Short-term</span>
+            <span class="tag">35 amenities</span>
+            <span class="tag">30+ cities</span>
+          </div>
+        </div>
+        <div class="portal-card">
+          <h3>Rightmove</h3>
+          <div class="country">🇬🇧 United Kingdom</div>
+          <div class="tags">
+            <span class="tag green">Buy</span>
+            <span class="tag green">Rent</span>
+            <span class="tag">17 cities</span>
+          </div>
+        </div>
+        <div class="portal-card">
+          <h3>Hybel.no</h3>
+          <div class="country">🇳🇴 Norway</div>
+          <div class="tags">
+            <span class="tag green">Rent</span>
+            <span class="tag">32 params</span>
+            <span class="tag">Django-style</span>
+          </div>
+        </div>
+        <div class="portal-card">
+          <h3>Property24</h3>
+          <div class="country">🇿🇦 South Africa</div>
+          <div class="tags">
+            <span class="tag green">Buy</span>
+            <span class="tag green">Rent</span>
+            <span class="tag">Feature codes</span>
+          </div>
+        </div>
+        <div class="portal-card">
+          <h3>Craigslist</h3>
+          <div class="country">🇺🇸 United States</div>
+          <div class="tags">
+            <span class="tag green">Buy</span>
+            <span class="tag green">Rent</span>
+            <span class="tag">40 cities</span>
+          </div>
+        </div>
+        <div class="portal-card">
+          <h3>Domain</h3>
+          <div class="country">🇦🇺 Australia</div>
+          <div class="tags">
+            <span class="tag green">Buy</span>
+            <span class="tag green">Rent</span>
+            <span class="tag">15 features</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <h2>Features</h2>
+      <div class="feature-grid">
+        <div class="feature">
+          <h3>🎯 Zod Schemas</h3>
+          <p>Every parameter has a Zod type with <code>.describe()</code> hints. Works with AI structured output, form validation, or plain TypeScript.</p>
+        </div>
+        <div class="feature">
+          <h3>🔗 Custom Serializers</h3>
+          <p>Each portal has its own URL serializer. Query params, JSON blobs, path DSLs — we handle the encoding.</p>
+        </div>
+        <div class="feature">
+          <h3>📍 Location Codes</h3>
+          <p>Verified neighborhood and city codes. 39 Oslo districts, 25 Manhattan neighborhoods, and more.</p>
+        </div>
+        <div class="feature">
+          <h3>🤖 AI-Optimized</h3>
+          <p>Schema descriptions guide AI models to generate valid parameters from natural language queries.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="example">
+      <h2>Quick Example</h2>
+      <pre><code><span class="keyword">import</span> { finnNoConfig } <span class="keyword">from</span> <span class="string">"@use_homi/real-estate-portal-schemas"</span>;
+
+<span class="comment">// Build a rental search URL for Oslo</span>
+<span class="keyword">const</span> url = finnNoConfig.<span class="fn">serialize</span>(finnNoConfig.baseUrls.rent!, {
+  location: <span class="string">"0.20061"</span>,      <span class="comment">// Oslo</span>
+  price_to: <span class="string">15000</span>,           <span class="comment">// max 15,000 NOK/month</span>
+  min_bedrooms: <span class="string">2</span>,
+  facilities: [<span class="string">"1"</span>, <span class="string">"4"</span>],    <span class="comment">// balcony, elevator</span>
+  animals_allowed: <span class="string">"1"</span>,      <span class="comment">// pets OK</span>
+});
+
+<span class="comment">// → https://www.finn.no/realestate/lettings/search.html?location=0.20061&price_to=15000&min_bedrooms=2&facilities=1&facilities=4&animals_allowed=1</span></code></pre>
+    </section>
+
+    <footer>
+      <p>Built by <a href="https://homi.so">Homi</a> — AI-powered home search.</p>
+      <div class="links">
+        <a href="https://www.npmjs.com/package/@use_homi/real-estate-portal-schemas">npm</a>
+        <a href="https://github.com/Boe-Ventures/real-estate-portal-schemas">GitHub</a>
+        <a href="https://homi.so">Homi</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
