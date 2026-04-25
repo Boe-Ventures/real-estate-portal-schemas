@@ -57,6 +57,10 @@
     "./build": {
       "types": "./dist/adapters/index.d.ts",
       "default": "./dist/adapters/index.js"
+    },
+    "./generate": {
+      "types": "./dist/generate.d.ts",
+      "default": "./dist/generate.js"
     }
   },
   "files": [
@@ -103,8 +107,10 @@
     "zod": "^3.24.0 || ^4.0.0"
   },
   "devDependencies": {
+    "@ai-sdk/anthropic": "^3.0.71",
     "@ai-sdk/openai": "^3.0.53",
     "ai": "^6.0.168",
+    "dotenv": "^17.4.2",
     "tsx": "^4.21.0",
     "typescript": "^5.8.0"
   },

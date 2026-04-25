@@ -56,15 +56,64 @@ const url = finnNoConfig.serialize(baseUrl!, {
 
 ## AI-Powered URL Generation
 
+The `generateUrl` function is the easiest way to generate search URLs. Give it a portal, an intention, and a story — it handles the rest:
+
+```typescript
+import { generateUrl } from "@use_homi/real-estate-portal-schemas/generate";
+
+// Simple: just a portal + intention + story
+const result = await generateUrl({
+  portal: "finn.no",
+  intention: "rent",
+  story: "Young couple in Oslo with a dog. 2BR, balcony, elevator. 15k NOK/month.",
+});
+
+if (result.ok) {
+  console.log(result.url);   // https://www.finn.no/realestate/lettings/search.html?location=0.20061&...
+  console.log(result.label); // "Finn.no — Oslo Rent 2BR"
+  console.log(result.params); // { location: "0.20061", min_bedrooms: 2, ... }
+}
+
+// With structured context fields
+const result2 = await generateUrl({
+  portal: "zillow",
+  intention: "rent",
+  city: "New York",
+  budget: 3500,
+  currency: "USD",
+  bedrooms: 1,
+  amenities: ["laundry", "AC"],
+  story: "Software engineer in Manhattan, need in-unit laundry.",
+});
+```
+
+Uses Anthropic Sonnet by default. Pass any AI SDK model via the `model` option:
+
+```typescript
+import { openai } from "@ai-sdk/openai";
+
+const result = await generateUrl({
+  portal: "finn.no",
+  intention: "rent",
+  story: "...",
+  model: openai("gpt-4o"),
+});
+```
+
+Requires `ai` and `@ai-sdk/anthropic` (or your chosen provider) as peer dependencies.
+
+### Low-Level: Raw Schemas
+
 Each schema uses Zod `.describe()` hints so AI models can generate valid parameters via structured output:
 
 ```typescript
-import { generateText, Output } from "ai";
+import { generateObject } from "ai";
+import { anthropic } from "@ai-sdk/anthropic";
 import { finnNoConfig, finnNoParamsSchema } from "@use_homi/real-estate-portal-schemas";
 
-const { output: params } = await generateText({
-  model: yourModel,
-  output: Output.object({ schema: finnNoParamsSchema }),
+const { object: params } = await generateObject({
+  model: anthropic("claude-sonnet-4-20250514"),
+  schema: finnNoParamsSchema,
   prompt:
     "Generate Finn.no search params for a 2BR apartment in Oslo, budget 15000 NOK/month, needs parking and elevator",
 });
@@ -73,6 +122,20 @@ const url = finnNoConfig.serialize(finnNoConfig.baseUrls.rent!, params);
 ```
 
 The `.describe()` hints on each field guide the model — for example, the `facilities` field describes all available codes: `"1=balcony/terrace, 2=fireplace, 4=elevator, 23=garage/parking..."`.
+
+### Available Portals for `generateUrl`
+
+| Portal ID | Aliases | Intentions |
+|-----------|---------|------------|
+| `finn.no` | `finn` | buy, rent |
+| `zillow.com` | `zillow` | buy, rent |
+| `streeteasy.com` | `streeteasy` | buy, rent |
+| `hybel.no` | `hybel` | rent |
+| `airbnb.com` | `airbnb` | rent_short |
+| `rightmove.co.uk` | `rightmove` | buy, rent |
+| `property24.com` | `property24` | buy, rent |
+| `craigslist.org` | `craigslist` | buy, rent |
+| `domain.com.au` | `domain` | buy, rent |
 
 ## Provider Lookup
 
