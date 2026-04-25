@@ -72,3 +72,34 @@ export {
   getProvidersByCountry,
 } from "./base-urls.js";
 export type { ProviderBaseUrls } from "./base-urls.js";
+
+// Normalized taxonomy
+export {
+  HOMI_AMENITIES,
+  HomiAmenitySchema,
+  HOMI_PROPERTY_TYPES,
+  HomiPropertyTypeSchema,
+  HOMI_OWNERSHIP_TYPES,
+  HomiOwnershipTypeSchema,
+  HOMI_ENERGY_RATINGS,
+  HomiEnergyRatingSchema,
+  HOMI_FURNISHED_STATUS,
+  HomiFurnishedStatusSchema,
+  HOMI_SORT_OPTIONS,
+  HomiSortOptionSchema,
+  NormalizedSearchParamsSchema,
+} from "./taxonomy.js";
+export type {
+  HomiAmenity,
+  HomiPropertyType,
+  HomiOwnershipType,
+  HomiEnergyRating,
+  HomiFurnishedStatus,
+  HomiSortOption,
+  NormalizedSearchParams,
+  SearchIntent,
+} from "./taxonomy.js";
+
+// Adapter / build API — import from subpaths to avoid circular deps:
+//   import { build } from "@use_homi/real-estate-portal-schemas/build"
+//   import { NormalizedSearchParamsSchema } from "@use_homi/real-estate-portal-schemas/taxonomy"
