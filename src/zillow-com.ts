@@ -41,25 +41,28 @@ export const zillowFilterStateSchema = z.object({
     .optional()
     .describe("For rent mode. Set { value: true } for rental searches."),
 
-  // === Sale type flags (set to false for rentals) ===
+  // === Sale type flags ===
+  // IMPORTANT: Omit these entirely unless the user explicitly asks to filter
+  // by sale type. Zillow's defaults handle the common case. Only set to
+  // { value: true } to include a specific type, or { value: false } to exclude it.
   fsba: valueWrapper(z.boolean())
     .optional()
-    .describe("For sale by agent. Set false for rentals."),
+    .describe("For sale by agent. Omit to use default (included for buy, excluded for rent)."),
   fsbo: valueWrapper(z.boolean())
     .optional()
-    .describe("For sale by owner. Set false for rentals."),
+    .describe("For sale by owner. Omit to use default."),
   nc: valueWrapper(z.boolean())
     .optional()
-    .describe("New construction. Set false for rentals."),
+    .describe("New construction only. Omit unless user specifically wants new builds."),
   cmsn: valueWrapper(z.boolean())
     .optional()
-    .describe("Coming soon. Set false for rentals."),
+    .describe("Coming soon listings. Omit unless user specifically wants pre-market."),
   auc: valueWrapper(z.boolean())
     .optional()
-    .describe("Auction. Set false for rentals."),
+    .describe("Auction listings. Omit unless user specifically wants auctions."),
   fore: valueWrapper(z.boolean())
     .optional()
-    .describe("Foreclosure. Set false for rentals."),
+    .describe("Foreclosures. Omit unless user specifically wants foreclosures."),
 
   // === Price ===
   price: rangeSchema
@@ -122,13 +125,13 @@ export const zillowFilterStateSchema = z.object({
     ),
   mf: valueWrapper(z.boolean())
     .optional()
-    .describe("Include multi-family. Default false for rentals."),
+    .describe("Include multi-family properties. Omit to use default."),
   land: valueWrapper(z.boolean())
     .optional()
-    .describe("Include land/lots. Default false for rentals."),
+    .describe("Include land/lots. Omit to use default."),
   manu: valueWrapper(z.boolean())
     .optional()
-    .describe("Include manufactured homes. Default false for rentals."),
+    .describe("Include manufactured homes. Omit to use default."),
 
   // === Space type (rental) ===
   r4r: valueWrapper(z.boolean())
@@ -235,13 +238,10 @@ export const zillowFilterStateSchema = z.object({
   // pmf and pf appear in default state — likely related to senior communities
   pmf: valueWrapper(z.boolean())
     .optional()
-    .describe(
-      "Exclude park/mobile/manufactured. Default false. " +
-        "May also relate to 55+ community filtering.",
-    ),
+    .describe("Exclude park/mobile/manufactured homes. Omit to use default."),
   pf: valueWrapper(z.boolean())
     .optional()
-    .describe("Pre-foreclosure. Default false for rentals."),
+    .describe("Pre-foreclosure. Omit to use default."),
 
   // === Keywords ===
   // Keywords are passed as a separate param, not in filterState
