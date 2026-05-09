@@ -12,17 +12,21 @@ Homi uses these schemas to power its [AI Scouting](https://homi.so) pipeline —
 
 ## Portals
 
-| Portal | Country | Buy | Rent | Short-term | Neighborhoods |
-|--------|---------|-----|------|------------|---------------|
-| [Finn.no](https://finn.no) | 🇳🇴 Norway | ✅ | ✅ | — | 39 (Oslo, Bergen, Trondheim) |
-| [Zillow](https://zillow.com) | 🇺🇸 US | ✅ | ✅ | — | 13 cities |
-| [StreetEasy](https://streeteasy.com) | 🇺🇸 NYC | ✅ | ✅ | — | 25+ Manhattan neighborhoods |
-| [Hybel.no](https://hybel.no) | 🇳🇴 Norway | — | ✅ | — | Norwegian cities |
-| [Airbnb](https://airbnb.com) | 🌍 Global | — | ✅ | ✅ | 30+ cities worldwide |
-| [Rightmove](https://rightmove.co.uk) | 🇬🇧 UK | ✅ | ✅ | — | 17 UK cities |
-| [Property24](https://property24.com) | 🇿🇦 South Africa | ✅ | ✅ | — | SA cities |
-| [Craigslist](https://craigslist.org) | 🇺🇸 US | ✅ | ✅ | — | 40 US cities |
-| [Domain](https://domain.com.au) | 🇦🇺 Australia | ✅ | ✅ | — | AU cities + suburbs |
+| Portal | Country | Buy | Rent | Short-term | Adapter | Neighborhoods |
+|--------|---------|-----|------|------------|---------|---------------|
+| [Finn.no](https://finn.no) | 🇳🇴 Norway | ✅ | ✅ | — | ✅ | 39 (Oslo, Bergen, Trondheim) |
+| [Zillow](https://zillow.com) | 🇺🇸 US | ✅ | ✅ | — | ✅ | 13 cities |
+| [LiveOhana](https://liveohana.ai) | 🇺🇸 US | — | ✅ | — | ✅ | 13 US cities (NYC, SF focus) |
+| [StreetEasy](https://streeteasy.com) | 🇺🇸 NYC | ✅ | ✅ | — | — | 25+ Manhattan neighborhoods |
+| [Hybel.no](https://hybel.no) | 🇳🇴 Norway | — | ✅ | — | — | Norwegian cities |
+| [Airbnb](https://airbnb.com) | 🌍 Global | — | ✅ | ✅ | — | 30+ cities worldwide |
+| [Rightmove](https://rightmove.co.uk) | 🇬🇧 UK | ✅ | ✅ | — | — | 17 UK cities |
+| [Property24](https://property24.com) | 🇿🇦 South Africa | ✅ | ✅ | — | — | SA cities |
+| [Craigslist](https://craigslist.org) | 🇺🇸 US | ✅ | ✅ | — | — | 40 US cities |
+| [Domain](https://domain.com.au) | 🇦🇺 Australia | ✅ | ✅ | — | — | AU cities + suburbs |
+| [Hjem.no](https://hjem.no) | 🇳🇴 Norway | ✅ | — | — | — | Norwegian cities |
+
+**Adapters** convert [normalized Homi taxonomy](#normalized-taxonomy) → portal-specific params, so you can use one set of search params across all portals.
 
 Plus base URLs for 30+ additional providers across 10 countries.
 
@@ -129,6 +133,7 @@ The `.describe()` hints on each field guide the model — for example, the `faci
 |-----------|---------|------------|
 | `finn.no` | `finn` | buy, rent |
 | `zillow.com` | `zillow` | buy, rent |
+| `liveohana.ai` | `liveohana` | rent |
 | `streeteasy.com` | `streeteasy` | buy, rent |
 | `hybel.no` | `hybel` | rent |
 | `airbnb.com` | `airbnb` | rent_short |
@@ -177,7 +182,7 @@ This package maps every filter to its exact URL parameter, verified against the 
 
 Each filter code is verified by opening the portal in a browser, clicking the filter option, and reading the resulting URL change. For server-rendered portals like StreetEasy, we use automated title-checking scripts that can verify dozens of location codes in seconds.
 
-This matters because portal filter codes change over time — what worked last year may not work today. Every code in this package was verified in April 2026.
+This matters because portal filter codes change over time — what worked last year may not work today. Every code in this package was verified in April–May 2026.
 
 ## Contributing
 
