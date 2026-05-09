@@ -58,6 +58,10 @@ export { craigslistConfig, craigslistParamsSchema } from "./craigslist-org.js";
 export { domainAuConfig, domainAuParamsSchema } from "./domain-com-au.js";
 export { hjemNoConfig, hjemNoParamsSchema } from "./hjem-no.js";
 export {
+  liveohanaConfig,
+  liveohanaParamsSchema,
+} from "./liveohana-ai.js";
+export {
   ALL_PROVIDERS,
   NORWAY_PROVIDERS,
   US_PROVIDERS,

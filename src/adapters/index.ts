@@ -1,16 +1,18 @@
 import type { NormalizedSearchParams, SearchIntent } from "../taxonomy.js";
 import { build as buildFinnNo } from "./finn-no.js";
+import { build as buildLiveOhana } from "./liveohana-ai.js";
 import { build as buildZillow } from "./zillow-com.js";
 
 // ============================================================================
 // ADAPTER REGISTRY
 // ============================================================================
 
-export type SupportedPortal = "finn.no" | "zillow";
+export type SupportedPortal = "finn.no" | "zillow" | "liveohana.ai";
 
 const ADAPTERS: Record<SupportedPortal, (intent: SearchIntent, params: NormalizedSearchParams) => string> = {
   "finn.no": buildFinnNo,
   zillow: buildZillow,
+  "liveohana.ai": buildLiveOhana,
 };
 
 /**
@@ -50,4 +52,5 @@ export function build(
 
 // Re-export individual adapters for direct use
 export { build as buildFinnNo } from "./finn-no.js";
+export { build as buildLiveOhana } from "./liveohana-ai.js";
 export { build as buildZillow } from "./zillow-com.js";

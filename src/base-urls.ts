@@ -90,6 +90,15 @@ export const NORWAY_PROVIDERS: ProviderBaseUrls[] = [
 
 export const US_PROVIDERS: ProviderBaseUrls[] = [
   {
+    id: "liveohana.ai",
+    name: "LiveOhana",
+    country: "US",
+    baseUrls: {
+      rent: "https://liveohana.ai/search",
+    },
+    hasSchema: true,
+  },
+  {
     id: "zillow.com",
     name: "Zillow",
     country: "US",
