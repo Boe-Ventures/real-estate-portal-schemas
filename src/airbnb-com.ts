@@ -369,4 +369,13 @@ export const airbnbConfig: ProviderUrlConfig = {
     "Toronto, Canada": "Toronto--Canada",
     "Mexico City, Mexico": "Mexico-City--Mexico",
   },
+  multiNeighborhoodSupport: "none",
+  promptGuidance: [
+    "- **price_max semantics depend on stay length.** For stays of 28+ nights, Airbnb's `price_max` is the MONTHLY ceiling, not nightly. For shorter stays, it's per-night. If `Stay length` ≥ 28 nights AND the user has a per-month budget, set `price_max` to the monthly budget DIRECTLY — do NOT divide, do NOT add a buffer (e.g. $10000/month → price_max=10000). For stays under 28 nights with a per-night budget, use the budget as-is.",
+    "- Filters compound aggressively. Each amenity cuts inventory roughly in half; `min_beds` + `min_bedrooms` + `price_max` + multiple amenities reliably returns zero results.",
+    "- Leave amenities EMPTY by default. Only set 1-2 if the user explicitly named them as truly non-negotiable. NEVER default to wifi/kitchen/workspace/heating just because they're common.",
+    "- Don't set `min_beds` and `min_bedrooms` together — they're nearly redundant. Pick `min_bedrooms`.",
+    "- Skip `min_bathrooms` entirely; let post-import scoring handle bathrooms.",
+    "- Airbnb is search-radius-from-a-point, not neighborhood-keyed — ignore `Preferred neighborhoods`; just use the city slug from `knownLocations`. Story-based ranking on imported listings is far more accurate than stacking portal filters.",
+  ].join("\n"),
 };

@@ -13,6 +13,41 @@ export interface ProviderUrlConfig {
   serialize: (baseUrl: string, params: unknown) => string;
   /** Reference location codes for AI context */
   knownLocations?: Record<string, string>;
+  /**
+   * Provider-specific guidance appended to the URL-generation prompt.
+   *
+   * Free-form markdown. Use this to encode hard-won knowledge about how the
+   * portal actually behaves — filter aggression, mandatory fields, semantic
+   * quirks, anything the bare schema description can't capture.
+   *
+   * Consumed by LLM-driven URL generators (e.g. Homi's source-url-generator).
+   */
+  promptGuidance?: string;
+  /**
+   * Worked examples — concrete params objects with a short description.
+   *
+   * Rendered as JSON code blocks in the URL-generation prompt to anchor the
+   * model on real expected outputs. Each `params` must be a valid value for
+   * the provider's `params` schema (typed as `unknown` here so this
+   * interface stays portable, but you should construct them against the
+   * provider-specific param type).
+   */
+  examples?: Array<{ description: string; params: unknown }>;
+  /**
+   * How this provider handles multi-neighborhood searches in one URL.
+   *
+   * - `'union'`: passing N neighborhoods in one URL unions them correctly.
+   *   StreetEasy (`area: [...]`), Finn (repeated `location`), default safe.
+   * - `'single'`: only ONE neighborhood per URL filters effectively. Zillow:
+   *   multi-region falls back to city-wide. Callers should emit N URLs.
+   * - `'none'`: the portal doesn't have neighborhood-level filters at all
+   *   (e.g. Airbnb-style "search radius from a point").
+   *
+   * Used by callers to decide whether to fan out a multi-neighborhood
+   * collection into multiple saved searches. Optional with implicit
+   * default `'union'` for back-compat — declare explicitly for clarity.
+   */
+  multiNeighborhoodSupport?: "union" | "single" | "none";
 }
 
 /**

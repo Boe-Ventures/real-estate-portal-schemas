@@ -505,4 +505,57 @@ export const zillowConfig: ProviderUrlConfig = {
     "Diamond Heights, San Francisco": "268110",
     "Telegraph Hill, San Francisco": "268517",
   },
+  multiNeighborhoodSupport: "single",
+  promptGuidance: [
+    "- `knownLocations` mixes two types: whole-city entries (format like 'San Francisco, CA (san-francisco-ca): 20330') and neighborhood entries (format like 'Marina District, San Francisco: 274422'). They are NOT interchangeable.",
+    "- `citySlug` is REQUIRED — read it from the parenthetical of the city entry (e.g. 'san-francisco-ca' from 'San Francisco, CA (san-francisco-ca)').",
+    "- `regionSelection` is REQUIRED — never omit it. Without a region, Zillow has no geographic anchor and returns zero listings.",
+    "- **One neighborhood per URL.** Zillow's multi-region URL does NOT actually filter — passing 3 neighborhoods in `regionSelection` falls back to city-wide. The caller is responsible for fanning out to N URLs when the collection has N neighborhoods; you will be invoked once per neighborhood with a single entry in `Preferred neighborhoods`. Build `regionSelection` with that single neighborhood (`regionType: 7`).",
+    "- When the context still arrives with multiple neighborhoods (caller forgot to fan out), pick the first one — do NOT multi-region.",
+    "- When no preferred neighborhoods are listed: use the whole-city entry with `regionType: 6`.",
+    "- For property-type flags (`tow`, `con`, `apa`, `apco`, `mf`): OMIT them entirely to include all types (Zillow's default). Only set to `false` to EXCLUDE a type.",
+    "- **Amenity filters (`lau`, `ac`, `os`, `pool`, `parka`, `dish`, `hrdwd`, `fit`, etc.) are EXTREMELY aggressive at neighborhood level — each one cuts inventory by 50-80%.** Verified empirically: `lau: { value: true }` on Hell's Kitchen (thousands of rentals) returned zero results. Set at most 1 amenity flag, and only when the user named it as an absolute dealbreaker. For nice-to-haves, OMIT them entirely — post-import scoring against the story handles them more accurately than portal filters do.",
+    "- For STUDIOS, set `beds: { min: 0, max: 0 }` explicitly. A missing `min` defaults to 'any' and breaks the filter. Same shape for '1BR only': `{ min: 1, max: 1 }`.",
+  ].join("\n"),
+  examples: [
+    {
+      description: "Rent in SF, 2BR, max $4,200/mo, neighborhood = ['Marina District']",
+      params: {
+        citySlug: "san-francisco-ca",
+        usersSearchTerm: "San Francisco, CA",
+        regionSelection: [{ regionId: 274422, regionType: 7 }],
+        filterState: {
+          fr: { value: true },
+          mp: { max: 4200 },
+          beds: { min: 2 },
+          sort: { value: "days" },
+        },
+      },
+    },
+    {
+      description: "Buy in NYC, no neighborhoods specified, budget $1.5M",
+      params: {
+        citySlug: "new-york-ny",
+        usersSearchTerm: "New York, NY",
+        regionSelection: [{ regionId: 6181, regionType: 6 }],
+        filterState: {
+          price: { max: 1500000 },
+          beds: { min: 1 },
+        },
+      },
+    },
+    {
+      description: "Rent in SF, single neighborhood = ['Cow Hollow']",
+      params: {
+        citySlug: "san-francisco-ca",
+        usersSearchTerm: "San Francisco, CA",
+        regionSelection: [{ regionId: 268096, regionType: 7 }],
+        filterState: {
+          fr: { value: true },
+          mp: { max: 4200 },
+          beds: { min: 2 },
+        },
+      },
+    },
+  ],
 };

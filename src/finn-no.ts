@@ -528,4 +528,36 @@ export const finnNoConfig: ProviderUrlConfig = {
     "Vinderen (Oslo)": "1.20061.20531",
     "Østensjø (Oslo)": "1.20061.20521",
   },
+  multiNeighborhoodSupport: "union",
+  promptGuidance: [
+    "- Multi-location works correctly: pass `location` as an array and the serializer emits `?location=X&location=Y&...`. The portal unions sub-districts. One URL covers any number of neighborhoods.",
+    "- **Student / budget rentals: include `property_type: ['3', '16', '17']`** — that's leilighet (apartment) + hybel (bedsit) + rom i bofellesskap (shared room). Without `'17'`, you lose 70-80% of relevant student listings; verified empirically (Gamle Oslo: 5 listings without '17', 40 listings with it). Apply this when the story signals student, exchange, tight-budget, short-term, or 'first place'.",
+    "- `min_bedrooms` is a single integer (1-5), not a range. Use it for buy intentions when the user named a bedroom count.",
+    "- Rental-only property types: 12 (cabin), 16 (hybel), 17 (shared room) — don't use these for buy URLs.",
+    "- Buy-only property types: 9 (industrial), 11 (farm) — don't use these for rent URLs.",
+    "- Cosmetic title quirk: when multiple sub-districts are passed, Finn's heading falls back to 'Bolig til leie i Oslo' instead of listing each. The filter chips and actual results are still correctly scoped.",
+  ].join("\n"),
+  examples: [
+    {
+      description:
+        "Rent in Oslo, student budget, Grünerløkka + St.Hanshaugen, 8-12k NOK",
+      params: {
+        location: ["1.20061.20511", "1.20061.20509"],
+        price_from: 8000,
+        price_to: 12000,
+        property_type: ["3", "16", "17"],
+      },
+    },
+    {
+      description:
+        "Buy in Oslo, family, Frogner + Majorstuen, 5-8M NOK, 3+ bedrooms",
+      params: {
+        location: ["1.20061.20507", "1.20061.20508"],
+        price_from: 5000000,
+        price_to: 8000000,
+        property_type: ["3"],
+        min_bedrooms: 3,
+      },
+    },
+  ],
 };

@@ -1057,4 +1057,39 @@ export const streetEasyConfig: ProviderUrlConfig = {
     // NJ uses slug-based URLs, not area codes.
     // Use location='hoboken', 'jersey-city', etc.
   },
+  multiNeighborhoodSupport: "union",
+  promptGuidance: [
+    "- `bedsMin: N` alone means N+ bedrooms (no upper bound). For 'exactly N', set both `bedsMin: N` and `bedsMax: N`.",
+    "- For STUDIOS ONLY: `bedsMin: 0, bedsMax: 0`. For '1BR only': `bedsMin: 1, bedsMax: 1`.",
+    "- `location` scopes to a borough (e.g. 'nyc', 'manhattan', 'brooklyn'); `area: [...]` narrows further by neighborhood code. Cross-borough neighborhood searches: `location: 'nyc'` + `area: ['152', '146']`.",
+    "- Multi-area works in a single URL: `area: ['302', '301', '319']` correctly unions Williamsburg + Greenpoint + Park Slope.",
+    "- Amenity filters compound — stacking 3+ amenities with neighborhood + price + beds reliably returns zero. Cap at 1-2 amenity filters, only for genuine dealbreakers.",
+  ].join("\n"),
+  examples: [
+    {
+      description:
+        "Rent, Hell's Kitchen + Hudson Yards, 1BR, $3-5k, doorman + W/D",
+      params: {
+        location: "nyc",
+        area: ["152", "146"],
+        priceMin: 3000,
+        priceMax: 5000,
+        bedsMin: 1,
+        bedsMax: 1,
+        amenities: ["doorman", "washer_dryer"],
+      },
+    },
+    {
+      description:
+        "Rent, Brooklyn (Williamsburg + Greenpoint + Park Slope), 2BR+, $5-8k, pets",
+      params: {
+        location: "nyc",
+        area: ["302", "301", "319"],
+        priceMin: 5000,
+        priceMax: 8000,
+        bedsMin: 2,
+        amenities: ["pets"],
+      },
+    },
+  ],
 };
