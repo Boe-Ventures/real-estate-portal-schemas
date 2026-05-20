@@ -312,4 +312,11 @@ export const craigslistConfig: ProviderUrlConfig = {
     "Sacramento": "sacramento",
     "Boulder": "boulder",
   },
+  jsonLd: {
+    types: [],
+    available: false,
+    notes:
+      "Craigslist uses minimal HTML markup with no structured data. " +
+      "No JSON-LD, no schema.org annotations. Listing data must be extracted from raw HTML.",
+  },
 };

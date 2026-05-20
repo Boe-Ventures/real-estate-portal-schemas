@@ -20,6 +20,7 @@ Homi uses these schemas to power its [AI Scouting](https://homi.so) pipeline —
 | [StreetEasy](https://streeteasy.com) | 🇺🇸 NYC | ✅ | ✅ | — | — | 25+ Manhattan neighborhoods |
 | [Hybel.no](https://hybel.no) | 🇳🇴 Norway | — | ✅ | — | — | Norwegian cities |
 | [Airbnb](https://airbnb.com) | 🌍 Global | — | ✅ | ✅ | — | 30+ cities worldwide |
+| [Booking.com](https://booking.com) | 🌍 Global | — | ✅ | ✅ | — | 25+ cities worldwide |
 | [Rightmove](https://rightmove.co.uk) | 🇬🇧 UK | ✅ | ✅ | — | — | 17 UK cities |
 | [Property24](https://property24.com) | 🇿🇦 South Africa | ✅ | ✅ | — | — | SA cities |
 | [Craigslist](https://craigslist.org) | 🇺🇸 US | ✅ | ✅ | — | — | 40 US cities |
@@ -137,6 +138,7 @@ The `.describe()` hints on each field guide the model — for example, the `faci
 | `streeteasy.com` | `streeteasy` | buy, rent |
 | `hybel.no` | `hybel` | rent |
 | `airbnb.com` | `airbnb` | rent_short |
+| `booking.com` | `booking` | rent, rent_short |
 | `rightmove.co.uk` | `rightmove` | buy, rent |
 | `property24.com` | `property24` | buy, rent |
 | `craigslist.org` | `craigslist` | buy, rent |
@@ -164,12 +166,13 @@ Import only what you need:
 import { finnNoConfig, FINN_FACILITIES } from "@use_homi/real-estate-portal-schemas/finn-no";
 import { zillowConfig } from "@use_homi/real-estate-portal-schemas/zillow";
 import { airbnbConfig, AIRBNB_AMENITIES } from "@use_homi/real-estate-portal-schemas/airbnb";
+import { bookingComConfig, BOOKING_PROPERTY_FACILITIES, BOOKING_ROOM_FACILITIES } from "@use_homi/real-estate-portal-schemas/booking";
 import { ALL_PROVIDERS } from "@use_homi/real-estate-portal-schemas/base-urls";
 ```
 
 ## Why This Exists
 
-Real estate portals hide most of their filter capabilities behind limited UIs. Airbnb has 591 amenity codes but only shows ~24 in the filter panel. Finn.no uses opaque numeric codes for facilities, property types, and locations. Zillow encodes everything in a JSON blob.
+Real estate portals hide most of their filter capabilities behind limited UIs. Airbnb has 591 amenity codes but only shows ~24 in the filter panel. Booking.com packs all filters into a single `nflt` compound parameter with semicolon-separated key=value pairs. Finn.no uses opaque numeric codes for facilities, property types, and locations. Zillow encodes everything in a JSON blob.
 
 This package maps every filter to its exact URL parameter, verified against the live site. It's useful for:
 

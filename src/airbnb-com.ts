@@ -370,6 +370,25 @@ export const airbnbConfig: ProviderUrlConfig = {
     "Mexico City, Mexico": "Mexico-City--Mexico",
   },
   multiNeighborhoodSupport: "none",
+  jsonLd: {
+    types: ["VacationRental", "Product"],
+    available: true,
+    fieldMap: {
+      "name": "title",
+      "description": "description",
+      "image": "imageUrls",
+      "address.addressLocality": "locality",
+      "latitude": "latitude",
+      "longitude": "longitude",
+      "aggregateRating.ratingValue": "ratingValue",
+      "aggregateRating.ratingCount": "ratingCount",
+      "containsPlace.occupancy.value": "maxGuests",
+    },
+    notes:
+      "Works with plain curl/fetch — no proxy needed. " +
+      "VacationRental has location + rating; Product has name + description. " +
+      "image field contains an array of 8+ photo URLs.",
+  },
   promptGuidance: [
     "- **price_max semantics depend on stay length.** For stays of 28+ nights, Airbnb's `price_max` is the MONTHLY ceiling, not nightly. For shorter stays, it's per-night. If `Stay length` ≥ 28 nights AND the user has a per-month budget, set `price_max` to the monthly budget DIRECTLY — do NOT divide, do NOT add a buffer (e.g. $10000/month → price_max=10000). For stays under 28 nights with a per-night budget, use the budget as-is.",
     "- Filters compound aggressively. Each amenity cuts inventory roughly in half; `min_beds` + `min_bedrooms` + `price_max` + multiple amenities reliably returns zero results.",

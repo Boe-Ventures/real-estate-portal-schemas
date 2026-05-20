@@ -383,8 +383,9 @@ export const GLOBAL_PROVIDERS: ProviderBaseUrls[] = [
     country: "GLOBAL",
     baseUrls: {
       rent_short: "https://www.booking.com/",
+      rent: "https://www.booking.com/",
     },
-    hasSchema: false,
+    hasSchema: true,
   },
 ];
 

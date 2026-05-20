@@ -359,4 +359,11 @@ export const hjemNoConfig: ProviderUrlConfig = {
     Tøyen: "tøyen",
     Bøler: "bøler",
   },
+  jsonLd: {
+    types: [],
+    available: false,
+    notes:
+      "Hjem.no is a Next.js SPA. No JSON-LD observed on listing detail pages. " +
+      "Listing data is hydrated client-side from API responses.",
+  },
 };

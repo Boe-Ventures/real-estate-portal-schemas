@@ -186,4 +186,24 @@ export const property24Config: ProviderUrlConfig = {
     Sandton: "sandton/gauteng/642",
     // TODO: verify all location IDs beyond Cape Town
   },
+  jsonLd: {
+    types: ["RealEstateListing", "Product", "BreadcrumbList"],
+    available: true,
+    fieldMap: {
+      "name": "title",
+      "url": "listingUrl",
+      "description": "description",
+      "image": "imageUrls",
+      "address.addressLocality": "locality",
+      "address.addressRegion": "province",
+      "offers.price": "price",
+      "offers.priceCurrency": "currency",
+      "numberOfBedrooms": "bedrooms",
+      "numberOfBathroomsFull": "bathrooms",
+      "floorSize.value": "floorSize",
+    },
+    notes:
+      "Property24 is server-rendered and embeds JSON-LD on listing detail pages. " +
+      "No significant bot protection — works with plain fetch.",
+  },
 };

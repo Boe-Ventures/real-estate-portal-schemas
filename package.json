@@ -1,7 +1,7 @@
 {
   "name": "@use_homi/real-estate-portal-schemas",
-  "version": "0.4.0",
-  "description": "Verified query parameter schemas for real estate portals. Zod-based, AI-friendly, with serializers for Finn.no, Zillow, StreetEasy, Hybel.no, Airbnb, Rightmove, Property24, and more.",
+  "version": "0.4.1",
+  "description": "Verified query parameter schemas for real estate portals. Zod-based, AI-friendly, with serializers for Finn.no, Zillow, StreetEasy, Hybel.no, Airbnb, Booking.com, Rightmove, Property24, and more.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -29,6 +29,10 @@
     "./airbnb": {
       "types": "./dist/airbnb-com.d.ts",
       "default": "./dist/airbnb-com.js"
+    },
+    "./booking": {
+      "types": "./dist/booking-com.d.ts",
+      "default": "./dist/booking-com.js"
     },
     "./rightmove": {
       "types": "./dist/rightmove-co-uk.d.ts",
@@ -61,6 +65,10 @@
     "./generate": {
       "types": "./dist/generate.d.ts",
       "default": "./dist/generate.js"
+    },
+    "./json-ld": {
+      "types": "./dist/json-ld.d.ts",
+      "default": "./dist/json-ld.js"
     }
   },
   "files": [
@@ -82,6 +90,7 @@
     "search",
     "zillow",
     "airbnb",
+    "booking.com",
     "rightmove",
     "finn.no",
     "streeteasy",

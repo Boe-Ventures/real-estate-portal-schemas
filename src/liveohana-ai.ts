@@ -293,4 +293,11 @@ export const liveohanaConfig: ProviderUrlConfig = {
     Austin: "Austin, TX, USA",
     Denver: "Denver, CO, USA",
   },
+  jsonLd: {
+    types: [],
+    available: false,
+    notes:
+      "LiveOhana is a Bubble.io SPA. No JSON-LD — all listing data is loaded " +
+      "client-side via Bubble's internal API. Requires browser session for extraction.",
+  },
 };

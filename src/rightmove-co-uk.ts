@@ -200,4 +200,23 @@ export const rightmoveConfig: ProviderUrlConfig = {
     Belfast: "REGION^197",
     Nottingham: "REGION^1344",
   },
+  jsonLd: {
+    types: ["Residence", "Product", "BreadcrumbList"],
+    available: true,
+    fieldMap: {
+      "name": "title",
+      "url": "listingUrl",
+      "description": "description",
+      "image": "imageUrls",
+      "address.addressLocality": "locality",
+      "address.addressRegion": "region",
+      "offers.price": "price",
+      "offers.priceCurrency": "currency",
+      "numberOfRooms": "bedrooms",
+    },
+    notes:
+      "Rightmove is server-rendered and embeds JSON-LD on listing detail pages. " +
+      "Moderate bot protection — may require proxy for bulk fetching. " +
+      "Residence type used for individual property pages.",
+  },
 };

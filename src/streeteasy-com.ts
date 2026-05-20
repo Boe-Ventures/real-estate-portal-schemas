@@ -1058,6 +1058,23 @@ export const streetEasyConfig: ProviderUrlConfig = {
     // Use location='hoboken', 'jersey-city', etc.
   },
   multiNeighborhoodSupport: "union",
+  jsonLd: {
+    types: ["SingleFamilyResidence", "Apartment", "Product", "BreadcrumbList"],
+    available: true,
+    fieldMap: {
+      "name": "title",
+      "url": "listingUrl",
+      "address.streetAddress": "streetAddress",
+      "address.addressLocality": "locality",
+      "address.addressRegion": "state",
+      "numberOfRooms": "bedrooms",
+      "floorSize.value": "floorSize",
+    },
+    notes:
+      "StreetEasy (Zillow subsidiary) embeds JSON-LD on listing detail pages. " +
+      "Same bot protection as Zillow (PerimeterX) — requires proxy or browser session. " +
+      "Residence type varies by listing; BreadcrumbList provides neighborhood hierarchy.",
+  },
   promptGuidance: [
     "- `bedsMin: N` alone means N+ bedrooms (no upper bound). For 'exactly N', set both `bedsMin: N` and `bedsMax: N`.",
     "- For STUDIOS ONLY: `bedsMin: 0, bedsMax: 0`. For '1BR only': `bedsMin: 1, bedsMax: 1`.",

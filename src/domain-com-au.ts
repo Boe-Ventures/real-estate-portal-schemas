@@ -241,4 +241,28 @@ export const domainAuConfig: ProviderUrlConfig = {
     "South Yarra": "south-yarra-vic-3141",
     "Richmond": "richmond-vic-3121",
   },
+  jsonLd: {
+    types: ["RealEstateListing", "Residence", "BreadcrumbList"],
+    available: true,
+    fieldMap: {
+      "name": "title",
+      "url": "listingUrl",
+      "description": "description",
+      "image": "imageUrls",
+      "address.streetAddress": "streetAddress",
+      "address.addressLocality": "locality",
+      "address.addressRegion": "state",
+      "address.postalCode": "postcode",
+      "geo.latitude": "latitude",
+      "geo.longitude": "longitude",
+      "offers.price": "price",
+      "offers.priceCurrency": "currency",
+      "numberOfBedrooms": "bedrooms",
+      "numberOfBathroomsFull": "bathrooms",
+    },
+    notes:
+      "Domain.com.au embeds JSON-LD on listing detail pages. " +
+      "Server-rendered, moderate bot protection. " +
+      "Rich address and geo data available in structured format.",
+  },
 };

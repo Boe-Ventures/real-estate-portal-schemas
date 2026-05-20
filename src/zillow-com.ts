@@ -506,6 +506,24 @@ export const zillowConfig: ProviderUrlConfig = {
     "Telegraph Hill, San Francisco": "268517",
   },
   multiNeighborhoodSupport: "single",
+  jsonLd: {
+    types: ["RealEstateListing", "Product", "BreadcrumbList"],
+    available: true,
+    fieldMap: {
+      "name": "title",
+      "url": "listingUrl",
+      "offers.itemOffered.@type": "propertyType",
+      "offers.itemOffered.floorSize": "floorSize",
+      "offers.itemOffered.numberOfBedrooms": "bedrooms",
+      "offers.itemOffered.address": "address",
+      "BreadcrumbList.itemListElement": "locationHierarchy",
+    },
+    notes:
+      "Bot-protected by PerimeterX — JSON-LD is only present when the HTML " +
+      "is successfully fetched (requires residential proxy or browser session). " +
+      "RealEstateListing contains the main listing data; BreadcrumbList " +
+      "provides the location hierarchy (state → city → neighborhood).",
+  },
   promptGuidance: [
     "- `knownLocations` mixes two types: whole-city entries (format like 'San Francisco, CA (san-francisco-ca): 20330') and neighborhood entries (format like 'Marina District, San Francisco: 274422'). They are NOT interchangeable.",
     "- `citySlug` is REQUIRED — read it from the parenthetical of the city entry (e.g. 'san-francisco-ca' from 'San Francisco, CA (san-francisco-ca)').",

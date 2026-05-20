@@ -48,6 +48,24 @@ export interface ProviderUrlConfig {
    * default `'union'` for back-compat — declare explicitly for clarity.
    */
   multiNeighborhoodSupport?: "union" | "single" | "none";
+  /**
+   * JSON-LD structured data extraction metadata for listing detail pages.
+   *
+   * Many property portals embed schema.org JSON-LD in their HTML, enabling
+   * structured data extraction with zero AI cost. This field describes what
+   * JSON-LD types are available and how their fields map to common listing
+   * properties.
+   */
+  jsonLd?: {
+    /** schema.org @type(s) to look for (e.g. 'VacationRental', 'Product') */
+    types: string[];
+    /** Whether this provider reliably serves JSON-LD on listing detail pages */
+    available: boolean;
+    /** Field mapping: JSON-LD path → common listing field name */
+    fieldMap?: Record<string, string>;
+    /** Notes about availability, quirks, bot protection, etc. */
+    notes?: string;
+  };
 }
 
 /**
@@ -87,6 +105,14 @@ export {
 export { streetEasyConfig, streetEasyParamsSchema } from "./streeteasy-com.js";
 export { hybelNoConfig, hybelNoParamsSchema } from "./hybel-no.js";
 export { airbnbConfig, airbnbParamsSchema } from "./airbnb-com.js";
+export {
+  bookingComConfig,
+  bookingComParamsSchema,
+  BOOKING_PROPERTY_FACILITIES,
+  BOOKING_ROOM_FACILITIES,
+  BOOKING_ACCOMMODATION_TYPES,
+  BOOKING_DEST_IDS,
+} from "./booking-com.js";
 export { rightmoveConfig, rightmoveParamsSchema } from "./rightmove-co-uk.js";
 export { property24Config, property24ParamsSchema } from "./property24-com.js";
 export { craigslistConfig, craigslistParamsSchema } from "./craigslist-org.js";
@@ -139,6 +165,10 @@ export type {
   NormalizedSearchParams,
   SearchIntent,
 } from "./taxonomy.js";
+
+// JSON-LD extraction utilities
+export { extractJsonLd, findJsonLdByType } from "./json-ld.js";
+export type { JsonLdBlock } from "./json-ld.js";
 
 // Adapter / build API — import from subpaths to avoid circular deps:
 //   import { build } from "@use_homi/real-estate-portal-schemas/build"

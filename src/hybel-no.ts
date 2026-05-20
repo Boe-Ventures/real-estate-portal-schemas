@@ -273,4 +273,11 @@ export const hybelNoConfig: ProviderUrlConfig = {
     Ålesund: "Ålesund--Norge",
     // TODO: verify these slug formats — may need encoding for Norwegian characters
   },
+  jsonLd: {
+    types: [],
+    available: false,
+    notes:
+      "Hybel.no is a lightweight Django-based rental portal. No JSON-LD observed. " +
+      "Listing data is rendered server-side in plain HTML.",
+  },
 };
