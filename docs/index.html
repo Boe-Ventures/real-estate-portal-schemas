@@ -3,20 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Real Estate Portal Schemas — Verified URL Parameters for Property Search</title>
-  <meta name="description" content="Open-source query parameter schemas for Zillow, Airbnb, Finn.no, Rightmove, StreetEasy, and more. Build parameterized search URLs for 9 real estate portals across 6 countries.">
-  <meta name="keywords" content="real estate, property search, zillow api, airbnb search url, rightmove parameters, finn.no query params, streeteasy filters, zod schema, typescript, ai agents">
-  
+  <title>Real Estate Portal Schemas — Verified URL Parameters for Property Search | Zillow, Airbnb, Finn.no & more</title>
+  <meta name="description" content="Open-source Zod schemas for 11 real estate portals across 10 countries. Build parameterized search URLs for Zillow, Airbnb, Finn.no, Rightmove, StreetEasy, Booking.com and 30+ providers. AI-optimized for structured output.">
+  <meta name="keywords" content="real estate, property search, zillow api, airbnb search url, rightmove parameters, finn.no query params, streeteasy filters, booking.com filters, zod schema, typescript, ai agents, ai structured output, property search url builder, mcp real estate, npm real estate">
+  <link rel="canonical" href="https://boe-ventures.github.io/real-estate-portal-schemas/">
+
   <!-- Open Graph -->
-  <meta property="og:title" content="Real Estate Portal Schemas">
-  <meta property="og:description" content="Verified URL parameter schemas for 9 real estate portals. Zod-based, AI-optimized.">
+  <meta property="og:title" content="Real Estate Portal Schemas — Verified URL Parameters for Property Search">
+  <meta property="og:description" content="Open-source Zod schemas for 11 real estate portals. Build parameterized search URLs with AI. Covers Zillow, Airbnb, Finn.no, Rightmove, StreetEasy, Booking.com and 30+ providers across 10 countries.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://boe-ventures.github.io/real-estate-portal-schemas/">
-  
+  <meta property="og:site_name" content="Real Estate Portal Schemas">
+
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Real Estate Portal Schemas">
-  <meta name="twitter:description" content="Verified URL parameter schemas for 9 real estate portals across 6 countries.">
+  <meta name="twitter:description" content="Verified URL parameter schemas for 11 real estate portals across 10 countries. Zod + AI structured output.">
+  <meta name="twitter:site" content="@use_homi">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "@use_homi/real-estate-portal-schemas",
+    "description": "Verified query parameter schemas for real estate search portals. Zod-based, AI-optimized, open source.",
+    "url": "https://boe-ventures.github.io/real-estate-portal-schemas/",
+    "codeRepository": "https://github.com/Boe-Ventures/real-estate-portal-schemas",
+    "programmingLanguage": "TypeScript",
+    "license": "https://opensource.org/licenses/MIT",
+    "author": {
+      "@type": "Organization",
+      "name": "Homi",
+      "url": "https://homi.so"
+    },
+    "keywords": ["real estate", "property search", "zillow", "airbnb", "zod", "typescript", "ai agents", "url builder"]
+  }
+  </script>
 
   <style>
     :root {
@@ -29,10 +52,11 @@
       --card-bg: #141414;
       --code-bg: #1c1c1c;
       --green: #22c55e;
+      --purple: #a78bfa;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
       background: var(--bg);
@@ -76,6 +100,30 @@
       height: 22px;
     }
 
+    .stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: left;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
     /* Install */
     .install {
       margin: 32px 0;
@@ -96,6 +144,12 @@
 
     .portals h2 {
       font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+
+    .portals .subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
       margin-bottom: 24px;
     }
 
@@ -149,6 +203,12 @@
       background: #052e16;
     }
 
+    .tag.purple {
+      color: var(--purple);
+      border-color: #5b21b6;
+      background: #1e1033;
+    }
+
     /* Features */
     .features {
       padding: 48px 0;
@@ -176,7 +236,7 @@
       font-size: 0.9rem;
     }
 
-    /* Code example */
+    /* Code examples */
     .example {
       padding: 48px 0;
       border-top: 1px solid var(--border);
@@ -184,18 +244,47 @@
 
     .example h2 {
       font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+
+    .example .subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
       margin-bottom: 16px;
+    }
+
+    .example-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0;
+    }
+
+    .example-tab {
+      padding: 8px 16px;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .example-tab.active {
+      color: var(--fg);
+      background: var(--card-bg);
     }
 
     pre {
       background: var(--code-bg);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 0 8px 8px 8px;
       padding: 20px;
       overflow-x: auto;
       font-family: 'SF Mono', 'Fira Code', monospace;
       font-size: 0.85rem;
       line-height: 1.7;
+      margin-bottom: 24px;
     }
 
     code { color: var(--fg); }
@@ -203,6 +292,40 @@
     .string { color: #86efac; }
     .comment { color: #525252; }
     .fn { color: #60a5fa; }
+
+    /* Use cases */
+    .use-cases {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .use-cases h2 {
+      font-size: 1.4rem;
+      margin-bottom: 24px;
+    }
+
+    .use-case-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .use-case {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .use-case h3 {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .use-case p {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
 
     /* Footer */
     footer {
@@ -235,11 +358,30 @@
   <div class="container">
     <header>
       <h1>🏠 Real Estate Portal Schemas</h1>
-      <p>Verified query parameter schemas for 9 real estate portals across 6 countries. Zod-based. AI-optimized. Open source.</p>
+      <p>Verified query parameter schemas for real estate search portals. Zod-based. AI-optimized. Open source.</p>
       <div class="badges">
         <a href="https://www.npmjs.com/package/@use_homi/real-estate-portal-schemas"><img src="https://img.shields.io/npm/v/@use_homi/real-estate-portal-schemas?color=blue&label=npm" alt="npm version"></a>
+        <a href="https://www.npmjs.com/package/@use_homi/real-estate-portal-schemas"><img src="https://img.shields.io/npm/dm/@use_homi/real-estate-portal-schemas?color=green&label=downloads" alt="npm downloads"></a>
         <a href="https://github.com/Boe-Ventures/real-estate-portal-schemas"><img src="https://img.shields.io/github/stars/Boe-Ventures/real-estate-portal-schemas?style=social" alt="GitHub stars"></a>
         <a href="https://github.com/Boe-Ventures/real-estate-portal-schemas/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@use_homi/real-estate-portal-schemas" alt="license"></a>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value">11</div>
+          <div class="stat-label">Schema portals</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">32</div>
+          <div class="stat-label">Total providers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">10</div>
+          <div class="stat-label">Countries</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">Zod 3+4</div>
+          <div class="stat-label">Compatible</div>
+        </div>
       </div>
     </header>
 
@@ -247,6 +389,7 @@
 
     <section class="portals">
       <h2>Supported Portals</h2>
+      <p class="subtitle">Full Zod schemas with serializers, location codes, and AI-friendly <code>.describe()</code> hints. Plus base URLs for 30+ additional providers.</p>
       <div class="portal-grid">
         <div class="portal-card">
           <h3>Finn.no</h3>
@@ -256,6 +399,7 @@
             <span class="tag green">Rent</span>
             <span class="tag">30+ params</span>
             <span class="tag">39 neighborhoods</span>
+            <span class="tag purple">Adapter</span>
           </div>
         </div>
         <div class="portal-card">
@@ -265,7 +409,8 @@
             <span class="tag green">Buy</span>
             <span class="tag green">Rent</span>
             <span class="tag">37 filters</span>
-            <span class="tag">JSON blob</span>
+            <span class="tag">115+ neighborhoods</span>
+            <span class="tag purple">Adapter</span>
           </div>
         </div>
         <div class="portal-card">
@@ -275,7 +420,7 @@
             <span class="tag green">Buy</span>
             <span class="tag green">Rent</span>
             <span class="tag">Path DSL</span>
-            <span class="tag">25+ neighborhoods</span>
+            <span class="tag">All NYC boroughs</span>
           </div>
         </div>
         <div class="portal-card">
@@ -284,8 +429,26 @@
           <div class="tags">
             <span class="tag green">Rent</span>
             <span class="tag green">Short-term</span>
-            <span class="tag">35 amenities</span>
+            <span class="tag">591 amenities</span>
             <span class="tag">30+ cities</span>
+          </div>
+        </div>
+        <div class="portal-card">
+          <h3>Booking.com</h3>
+          <div class="country">🌍 Global</div>
+          <div class="tags">
+            <span class="tag green">Short-term</span>
+            <span class="tag">Compound nflt param</span>
+            <span class="tag">25+ cities</span>
+          </div>
+        </div>
+        <div class="portal-card">
+          <h3>LiveOhana</h3>
+          <div class="country">🇺🇸 United States</div>
+          <div class="tags">
+            <span class="tag green">Rent</span>
+            <span class="tag">13 cities</span>
+            <span class="tag purple">Adapter</span>
           </div>
         </div>
         <div class="portal-card">
@@ -333,6 +496,13 @@
             <span class="tag">15 features</span>
           </div>
         </div>
+        <div class="portal-card">
+          <h3>Hjem.no</h3>
+          <div class="country">🇳🇴 Norway</div>
+          <div class="tags">
+            <span class="tag green">Buy</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -341,25 +511,56 @@
       <div class="feature-grid">
         <div class="feature">
           <h3>🎯 Zod Schemas</h3>
-          <p>Every parameter has a Zod type with <code>.describe()</code> hints. Works with AI structured output, form validation, or plain TypeScript.</p>
+          <p>Every parameter has a Zod type with <code>.describe()</code> hints. Works with AI structured output, form validation, or plain TypeScript. Zod 3 + 4 compatible.</p>
+        </div>
+        <div class="feature">
+          <h3>🤖 AI URL Generation</h3>
+          <p>One-function <code>generateUrl()</code> — give it a portal, intention, and natural language story. Uses Vercel AI SDK under the hood.</p>
         </div>
         <div class="feature">
           <h3>🔗 Custom Serializers</h3>
-          <p>Each portal has its own URL serializer. Query params, JSON blobs, path DSLs — we handle the encoding.</p>
+          <p>Each portal has its own URL serializer. Query params, JSON blobs, path DSLs, compound params — we handle the encoding.</p>
         </div>
         <div class="feature">
           <h3>📍 Location Codes</h3>
-          <p>Verified neighborhood and city codes. 39 Oslo districts, 25 Manhattan neighborhoods, and more.</p>
+          <p>Verified neighborhood and city codes. 39 Oslo districts, 115+ NYC neighborhoods (Zillow + StreetEasy), 45 SF neighborhoods, and more.</p>
         </div>
         <div class="feature">
-          <h3>🤖 AI-Optimized</h3>
-          <p>Schema descriptions guide AI models to generate valid parameters from natural language queries.</p>
+          <h3>🔄 Normalized Taxonomy</h3>
+          <p>Adapters convert one set of search params across all portals. Write once, search everywhere.</p>
+        </div>
+        <div class="feature">
+          <h3>📋 JSON-LD Extraction</h3>
+          <p>Extract and query schema.org structured data from listing pages. Lightweight, zero dependencies beyond regex + JSON.parse.</p>
         </div>
       </div>
     </section>
 
     <section class="example">
-      <h2>Quick Example</h2>
+      <h2>AI-Powered URL Generation</h2>
+      <p class="subtitle">Natural language in, parameterized search URL out. Works with any AI SDK provider.</p>
+      <div class="example-tabs">
+        <span class="example-tab active">generateUrl</span>
+      </div>
+      <pre><code><span class="keyword">import</span> { generateUrl } <span class="keyword">from</span> <span class="string">"@use_homi/real-estate-portal-schemas/generate"</span>;
+
+<span class="keyword">const</span> result = <span class="keyword">await</span> <span class="fn">generateUrl</span>({
+  portal: <span class="string">"finn.no"</span>,
+  intention: <span class="string">"rent"</span>,
+  story: <span class="string">"Young couple in Oslo with a dog. 2BR, balcony, elevator. 15k NOK/month."</span>,
+});
+
+<span class="keyword">if</span> (result.ok) {
+  console.<span class="fn">log</span>(result.url);    <span class="comment">// https://www.finn.no/realestate/lettings/search.html?location=0.20061&...</span>
+  console.<span class="fn">log</span>(result.label);  <span class="comment">// "Finn.no — Oslo Rent 2BR"</span>
+  console.<span class="fn">log</span>(result.params); <span class="comment">// { location: "0.20061", min_bedrooms: 2, ... }</span>
+}</code></pre>
+
+      <h2>Low-Level: Direct Schema Usage</h2>
+      <p class="subtitle">Full control with Zod schemas and custom serializers.</p>
+      <div class="example-tabs">
+        <span class="example-tab active">serialize</span>
+      </div>
       <pre><code><span class="keyword">import</span> { finnNoConfig } <span class="keyword">from</span> <span class="string">"@use_homi/real-estate-portal-schemas"</span>;
 
 <span class="comment">// Build a rental search URL for Oslo</span>
@@ -371,14 +572,45 @@
   animals_allowed: <span class="string">"1"</span>,      <span class="comment">// pets OK</span>
 });
 
-<span class="comment">// → https://www.finn.no/realestate/lettings/search.html?location=0.20061&price_to=15000&min_bedrooms=2&facilities=1&facilities=4&animals_allowed=1</span></code></pre>
+<span class="comment">// → https://www.finn.no/realestate/lettings/search.html?location=0.20061&amp;price_to=15000&amp;min_bedrooms=2&amp;facilities=1&amp;facilities=4&amp;animals_allowed=1</span></code></pre>
+    </section>
+
+    <section class="use-cases">
+      <h2>Built For</h2>
+      <div class="use-case-grid">
+        <div class="use-case">
+          <h3>🤖 AI Agents</h3>
+          <p>Construct valid search URLs from natural language via structured output.</p>
+        </div>
+        <div class="use-case">
+          <h3>🔍 Scrapers</h3>
+          <p>Generate parameterized search URLs for any portal without reverse-engineering.</p>
+        </div>
+        <div class="use-case">
+          <h3>🏗️ Property Tech</h3>
+          <p>Aggregate search across portals with a normalized taxonomy layer.</p>
+        </div>
+        <div class="use-case">
+          <h3>🧩 Browser Extensions</h3>
+          <p>Enhance portal search UIs with hidden filter capabilities.</p>
+        </div>
+        <div class="use-case">
+          <h3>🔌 MCP Servers</h3>
+          <p>Power AI assistant tools that search real estate portals on behalf of users.</p>
+        </div>
+        <div class="use-case">
+          <h3>📊 Market Research</h3>
+          <p>Systematically query portals to track listings, pricing, and availability.</p>
+        </div>
+      </div>
     </section>
 
     <footer>
-      <p>Built by <a href="https://homi.so">Homi</a> — AI-powered home search.</p>
+      <p>Built by <a href="https://homi.so">Homi</a> — AI-powered home search. Every filter code verified against the live portal, May 2026.</p>
       <div class="links">
         <a href="https://www.npmjs.com/package/@use_homi/real-estate-portal-schemas">npm</a>
         <a href="https://github.com/Boe-Ventures/real-estate-portal-schemas">GitHub</a>
+        <a href="https://github.com/Boe-Ventures/real-estate-portal-schemas/blob/main/README.md">Docs</a>
         <a href="https://homi.so">Homi</a>
       </div>
     </footer>
