@@ -116,6 +116,7 @@ export {
 export { rightmoveConfig, rightmoveParamsSchema } from "./rightmove-co-uk.js";
 export { property24Config, property24ParamsSchema } from "./property24-com.js";
 export { craigslistConfig, craigslistParamsSchema } from "./craigslist-org.js";
+export { leaseBreakConfig, leaseBreakParamsSchema } from "./leasebreak-com.js";
 export { domainAuConfig, domainAuParamsSchema } from "./domain-com-au.js";
 export { hjemNoConfig, hjemNoParamsSchema } from "./hjem-no.js";
 export {

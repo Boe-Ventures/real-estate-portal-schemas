@@ -1,7 +1,7 @@
 {
   "name": "@use_homi/real-estate-portal-schemas",
-  "version": "0.4.1",
-  "description": "Verified query parameter schemas for real estate portals. Zod-based, AI-friendly, with serializers for Finn.no, Zillow, StreetEasy, Hybel.no, Airbnb, Booking.com, Rightmove, Property24, and more.",
+  "version": "0.5.0",
+  "description": "Verified query parameter schemas for real estate portals. Zod-based, AI-friendly, with serializers for Finn.no, Zillow, StreetEasy, Leasebreak, Hybel.no, Airbnb, Booking.com, Rightmove, Property24, and more.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -49,6 +49,10 @@
     "./craigslist": {
       "types": "./dist/craigslist-org.d.ts",
       "default": "./dist/craigslist-org.js"
+    },
+    "./leasebreak": {
+      "types": "./dist/leasebreak-com.d.ts",
+      "default": "./dist/leasebreak-com.js"
     },
     "./domain-au": {
       "types": "./dist/domain-com-au.d.ts",

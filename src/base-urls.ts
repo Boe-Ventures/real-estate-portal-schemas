@@ -144,7 +144,17 @@ export const US_PROVIDERS: ProviderBaseUrls[] = [
     baseUrls: {
       rent: "https://www.craigslist.org/",
     },
-    hasSchema: false,
+    hasSchema: true,
+  },
+  {
+    id: "leasebreak.com",
+    name: "Leasebreak",
+    country: "US",
+    baseUrls: {
+      rent: "https://www.leasebreak.com/listings",
+      rent_short: "https://www.leasebreak.com/short-term-rentals",
+    },
+    hasSchema: true,
   },
   {
     id: "apartments.com",

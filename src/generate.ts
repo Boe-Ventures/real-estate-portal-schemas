@@ -28,6 +28,7 @@ import { airbnbConfig } from "./airbnb-com.js";
 import { rightmoveConfig } from "./rightmove-co-uk.js";
 import { property24Config } from "./property24-com.js";
 import { craigslistConfig } from "./craigslist-org.js";
+import { leaseBreakConfig } from "./leasebreak-com.js";
 import { domainAuConfig } from "./domain-com-au.js";
 
 // ---------------------------------------------------------------------------
@@ -44,6 +45,7 @@ const PROVIDER_CONFIGS: Record<string, ProviderUrlConfig> = {
   "rightmove.co.uk": rightmoveConfig,
   "property24.com": property24Config,
   "craigslist.org": craigslistConfig,
+  "leasebreak.com": leaseBreakConfig,
   "domain.com.au": domainAuConfig,
   // Short aliases
   finn: finnNoConfig,
@@ -54,6 +56,7 @@ const PROVIDER_CONFIGS: Record<string, ProviderUrlConfig> = {
   rightmove: rightmoveConfig,
   property24: property24Config,
   craigslist: craigslistConfig,
+  leasebreak: leaseBreakConfig,
   domain: domainAuConfig,
 };
 

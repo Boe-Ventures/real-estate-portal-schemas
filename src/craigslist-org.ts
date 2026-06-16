@@ -265,6 +265,8 @@ export const craigslistConfig: ProviderUrlConfig = {
   baseUrls: {
     rent: "https://craigslist.org",
     buy: "https://craigslist.org",
+    // Short-term maps to the sublets/temporary category — set `category: "sub"`.
+    rent_short: "https://craigslist.org",
   },
   params: craigslistParamsSchema,
   serialize: serializeCraigslistUrl,
@@ -312,6 +314,11 @@ export const craigslistConfig: ProviderUrlConfig = {
     "Sacramento": "sacramento",
     "Boulder": "boulder",
   },
+  promptGuidance: [
+    "- `city` is the subdomain (e.g. 'newyork', 'sfbay') — always set it from knownLocations.",
+    "- Category by intention: rent → 'apa' (apartments/housing), buy → 'rea' (real estate for sale), short-term → 'sub' (sublets/temporary).",
+    "- `min_price`/`max_price` are monthly for rent and total for sale. Set `max_price` from the user's budget; only set `min_price` if they gave a floor.",
+  ].join("\n"),
   jsonLd: {
     types: [],
     available: false,
