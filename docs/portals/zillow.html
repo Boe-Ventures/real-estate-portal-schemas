@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zillow — Real Estate Portal Schema | Query Parameters, Zod Schema & URL Serializer</title>
+  <meta name="description" content="Complete Zillow (United States) query parameter schema with Zod types, URL serializer, and verified location codes. Part of @use_homi/real-estate-portal-schemas.">
+  <link rel="canonical" href="https://boe-ventures.github.io/real-estate-portal-schemas/portals/zillow.html">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --fg: #e5e5e5;
+      --muted: #737373;
+      --accent: #3b82f6;
+      --accent-hover: #60a5fa;
+      --border: #262626;
+      --card-bg: #141414;
+      --code-bg: #1c1c1c;
+      --green: #22c55e;
+      --purple: #a78bfa;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); }
+    .back { display: inline-block; margin: 24px 0; font-size: 0.9rem; }
+    header { padding: 16px 0 32px; border-bottom: 1px solid var(--border); }
+    header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+    .header-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .flag { font-size: 1.5rem; }
+    .country { color: var(--muted); font-size: 0.95rem; }
+    .pattern-pill {
+      background: #1e1033; border: 1px solid #5b21b6; color: var(--purple);
+      border-radius: 20px; padding: 3px 12px; font-size: 0.75rem;
+      font-weight: 500; white-space: nowrap;
+    }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      background: var(--code-bg); border: 1px solid var(--border);
+      border-radius: 4px; padding: 2px 8px; font-size: 0.75rem; color: var(--muted);
+    }
+    .tag.green { color: var(--green); border-color: #166534; background: #052e16; }
+    .install {
+      margin: 24px 0; background: var(--code-bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem;
+      color: var(--green); user-select: all;
+    }
+    .import-path {
+      margin: 0 0 32px; background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem;
+    }
+    section { padding: 32px 0; border-top: 1px solid var(--border); }
+    section:first-of-type { border-top: none; }
+    section h2 { font-size: 1.3rem; margin-bottom: 16px; }
+    section h3 { font-size: 1rem; margin: 20px 0 8px; color: var(--muted); }
+    pre {
+      background: var(--code-bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 20px; overflow-x: auto;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.82rem; line-height: 1.7; margin-bottom: 16px;
+      max-height: 600px; overflow-y: auto;
+    }
+    pre.expanded { max-height: none; }
+    .expand-btn {
+      display: none; background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 6px 16px; color: var(--accent);
+      cursor: pointer; font-size: 0.8rem; margin: -8px 0 16px;
+    }
+    .expand-btn:hover { background: var(--code-bg); }
+    code { color: var(--fg); }
+    .keyword { color: #c084fc; }
+    .string { color: #86efac; }
+    .comment { color: #525252; }
+    .fn { color: #60a5fa; }
+    .type { color: #fbbf24; }
+    .number { color: #f472b6; }
+    footer {
+      padding: 32px 0; border-top: 1px solid var(--border);
+      color: var(--muted); font-size: 0.85rem;
+    }
+    .toc { margin: 24px 0; }
+    .toc a { display: inline-block; margin-right: 16px; font-size: 0.85rem; }
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      pre { font-size: 0.75rem; padding: 12px; }
+    }
+</style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="../">← Back to all portals</a>
+    
+    <header>
+      <div class="header-meta">
+        <span class="flag">🇺🇸</span>
+        <span class="country">United States</span>
+        <span class="pattern-pill">JSON Blob · searchQueryState</span>
+      </div>
+      <h1>Zillow</h1>
+      <div class="tags">
+        <span class="tag green">Buy</span>
+            <span class="tag green">Rent</span>
+            <span class="tag">37 filters</span>
+            <span class="tag">JSON Blob</span>
+      </div>
+    </header>
+    
+    <div class="install">npm install @use_homi/real-estate-portal-schemas</div>
+    <div class="import-path">
+      <span style="color: var(--muted);">import</span> { <span style="color: var(--fg);">zillowConfig</span> } <span style="color: var(--muted);">from</span> <span style="color: var(--green);">"@use_homi/real-estate-portal-schemas/zillow"</span>
+    </div>
+
+    <section id="example">
+      <h2>⚡ Quick Example</h2>
+      <pre><code>import { zillowConfig } from "@use_homi/real-estate-portal-schemas/zillow";
+
+const url = zillowConfig.serialize(zillowConfig.baseUrls.rent!, {
+  citySlug: "new-york-ny",
+  regionSelection: [{ regionId: 6181, regionType: 6 }],
+  filterState: {
+    fr: { value: true },        // rental mode
+    mp: { min: 2000, max: 4000 }, // $2-4k/month
+    beds: { min: 1 },
+    ac: { value: true },
+  },
+});
+
+console.log(url);
+// → https://www.zillow.com/new-york-ny/rentals/?searchQueryState={"filterState":{...}}</code></pre>
+    </section>
+
+    <nav class="toc">
+      <a href="#schema">Zod Schema</a>
+      <a href="#serializer">Serializer</a>
+      <a href="#config">Config & Known Locations</a>
+    </nav>
+    
+    <section id="schema">
+      <h2>🎯 Zod Schema</h2>
+      <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 16px;">Every query parameter with type, validation, and .describe() hints for AI.</p>
+      <pre><code>// ============================================================================
+
+// ---------------------------------------------------------------------------
+// Helper schemas
+// ---------------------------------------------------------------------------
+
+const valueWrapper = &lt;T extends z.ZodTypeAny&gt;(inner: T) =&gt;
+  z.object({ value: inner });
+
+const rangeSchema = z.object({
+  min: z.number().nullable().optional(),
+  max: z.number().nullable().optional(),
+});
+
+// ---------------------------------------------------------------------------
+// Filter state schema
+// ---------------------------------------------------------------------------
+
+export const zillowFilterStateSchema = z.object({
+  // === Search mode ===
+  fr: valueWrapper(z.boolean())
+    .optional()
+    .describe("For rent mode. Set { value: true } for rental searches."),
+
+  // === Sale type flags ===
+  // IMPORTANT: Omit these entirely unless the user explicitly asks to filter
+  // by sale type. Zillow's defaults handle the common case. Only set to
+  // { value: true } to include a specific type, or { value: false } to exclude it.
+  fsba: valueWrapper(z.boolean())
+    .optional()
+    .describe("For sale by agent. Omit to use default (included for buy, excluded for rent)."),
+  fsbo: valueWrapper(z.boolean())
+    .optional()
+    .describe("For sale by owner. Omit to use default."),
+  nc: valueWrapper(z.boolean())
+    .optional()
+    .describe("New construction only. Omit unless user specifically wants new builds."),
+  cmsn: valueWrapper(z.boolean())
+    .optional()
+    .describe("Coming soon listings. Omit unless user specifically wants pre-market."),
+  auc: valueWrapper(z.boolean())
+    .optional()
+    .describe("Auction listings. Omit unless user specifically wants auctions."),
+  fore: valueWrapper(z.boolean())
+    .optional()
+    .describe("Foreclosures. Omit unless user specifically wants foreclosures."),
+
+  // === Price ===
+  price: rangeSchema
+    .optional()
+    .describe(
+      "Buy only. Asking price range in USD. Example: { min: 300000, max: 800000 }.",
+    ),
+  mp: rangeSchema
+    .optional()
+    .describe(
+      "Rent only. Monthly rent range in USD. Example: { min: 1500, max: 4000 }.",
+    ),
+
+  // === Beds &amp; Baths ===
+  beds: rangeSchema
+    .optional()
+    .describe("Bedroom count range. Example: { min: 2 } for 2+ beds."),
+  baths: rangeSchema
+    .optional()
+    .describe(
+      "Bathroom count range. Supports decimals like 1.5. Example: { min: 1 }.",
+    ),
+
+  // === Home size ===
+  sqft: rangeSchema
+    .optional()
+    .describe(
+      "Square footage range. Example: { min: 800, max: 2000 }. " +
+        "Convert from metric: 1 m² ≈ 10.764 sqft.",
+    ),
+
+  // === Sort ===
+  sort: valueWrapper(z.string())
+    .optional()
+    .describe(
+      "Sort order. Common values: " +
+        "'priorityscore' (default rental), 'personalizedsort' (personalized), " +
+        "'days' (newest), 'priced' (price desc), 'pricea' (price asc), " +
+        "'globalrelevanceex' (relevance).",
+    ),
+
+  // === Property type (rental) ===
+  // Zillow uses exclusion-based property filtering — omit = include.
+  // "Houses" selected → set apa, con, apco, tow to false
+  // "Apartments/Condos" selected → set tow to false
+  // "Townhomes" → set apa, con, apco to false
+  tow: valueWrapper(z.boolean())
+    .optional()
+    .describe("Include townhomes. Omit or true = include, false = exclude."),
+  con: valueWrapper(z.boolean())
+    .optional()
+    .describe("Include condos. Omit or true = include, false = exclude."),
+  apa: valueWrapper(z.boolean())
+    .optional()
+    .describe("Include apartments. Omit or true = include, false = exclude."),
+  apco: valueWrapper(z.boolean())
+    .optional()
+    .describe(
+      "Include apartments/condos combined. Omit or true = include, false = exclude.",
+    ),
+  mf: valueWrapper(z.boolean())
+    .optional()
+    .describe("Include multi-family properties. Omit to use default."),
+  land: valueWrapper(z.boolean())
+    .optional()
+    .describe("Include land/lots. Omit to use default."),
+  manu: valueWrapper(z.boolean())
+    .optional()
+    .describe("Include manufactured homes. Omit to use default."),
+
+  // === Space type (rental) ===
+  r4r: valueWrapper(z.boolean())
+    .optional()
+    .describe(
+      "Room for rent. Set { value: true } to show rooms instead of whole units.",
+    ),
+  r4re: valueWrapper(z.boolean())
+    .optional()
+    .describe(
+      "Entire place. Set { value: false } when room-for-rent is selected.",
+    ),
+
+  // === Pets ===
+  sdog: valueWrapper(z.boolean()).optional().describe("Allows small dogs."),
+  ldog: valueWrapper(z.boolean()).optional().describe("Allows large dogs."),
+  cat: valueWrapper(z.boolean()).optional().describe("Allows cats."),
+  np: valueWrapper(z.boolean())
+    .optional()
+    .describe("No pets allowed (filter for pet-free buildings)."),
+
+  // === Popular amenities ===
+  lau: valueWrapper(z.boolean()).optional().describe("In-unit laundry."),
+  ac: valueWrapper(z.boolean())
+    .optional()
+    .describe("Must have A/C (air conditioning)."),
+  parka: valueWrapper(z.boolean()).optional().describe("On-site parking."),
+
+  // === Standard amenities ===
+  eaa: valueWrapper(z.boolean()).optional().describe("Elevator."),
+  pool: valueWrapper(z.boolean()).optional().describe("Pool."),
+  wat: valueWrapper(z.boolean()).optional().describe("Waterfront."),
+  fur: valueWrapper(z.boolean()).optional().describe("Furnished."),
+  hsia: valueWrapper(z.boolean()).optional().describe("High speed internet."),
+  // Basement triggers 3 keys simultaneously
+  hbas: valueWrapper(z.boolean())
+    .optional()
+    .describe("Has basement (part 1 of 3 — set hbas, basf, basu together)."),
+  basf: valueWrapper(z.boolean())
+    .optional()
+    .describe("Basement finished (part 2 of 3 — set with hbas and basu)."),
+  basu: valueWrapper(z.boolean())
+    .optional()
+    .describe("Basement unfinished (part 3 of 3 — set with hbas and basf)."),
+  uti: valueWrapper(z.boolean()).optional().describe("Utilities included."),
+  hrdwd: valueWrapper(z.boolean()).optional().describe("Hardwood floors."),
+  fit: valueWrapper(z.boolean()).optional().describe("Fitness center."),
+  os: valueWrapper(z.boolean()).optional().describe("Outdoor space."),
+  dish: valueWrapper(z.boolean()).optional().describe("Dishwasher."),
+
+  // === Views ===
+  cityv: valueWrapper(z.boolean()).optional().describe("City view."),
+  mouv: valueWrapper(z.boolean()).optional().describe("Mountain view."),
+  parkv: valueWrapper(z.boolean()).optional().describe("Park view."),
+  watv: valueWrapper(z.boolean()).optional().describe("Water view."),
+
+  // === Property details ===
+  sto: valueWrapper(z.boolean()).optional().describe("Single-story only."),
+
+  // === Accessibility &amp; community ===
+  disac: valueWrapper(z.boolean())
+    .optional()
+    .describe("Disabled access / ADA accessible."),
+  inc: valueWrapper(z.boolean())
+    .optional()
+    .describe("Income restricted / affordable housing."),
+  fmfb: valueWrapper(z.boolean())
+    .optional()
+    .describe("Apartment community (featured multi-family building)."),
+  ca: valueWrapper(z.boolean())
+    .optional()
+    .describe("Controlled access / gated entry."),
+
+  // === Listing details ===
+  "3d": valueWrapper(z.boolean())
+    .optional()
+    .describe("Has 3D tour / virtual tour."),
+  app: valueWrapper(z.boolean())
+    .optional()
+    .describe("Accepts Zillow applications (rental)."),
+  ita: valueWrapper(z.boolean())
+    .optional()
+    .describe("Instant tour available (rental)."),
+  stl: valueWrapper(z.boolean())
+    .optional()
+    .describe("Short term lease available (rental)."),
+
+  // === Time on Zillow ===
+  doz: valueWrapper(z.string())
+    .optional()
+    .describe(
+      "Days on Zillow. String values: " +
+        "'1' (1 day), '7' (7 days), '14' (14 days), '30' (30 days), " +
+        "'90' (90 days), '180' (6 months), '365' (12 months), " +
+        "'730' (24 months), '1095' (36 months).",
+    ),
+
+  // === Move-in date (rental) ===
+  rad: valueWrapper(z.string())
+    .optional()
+    .describe("Move-in date as ISO date string 'YYYY-MM-DD'."),
+
+  // === 55+ Communities ===
+  // pmf and pf appear in default state — likely related to senior communities
+  pmf: valueWrapper(z.boolean())
+    .optional()
+    .describe("Exclude park/mobile/manufactured homes. Omit to use default."),
+  pf: valueWrapper(z.boolean())
+    .optional()
+    .describe("Pre-foreclosure. Omit to use default."),
+
+  // === Keywords ===
+  // Keywords are passed as a separate param, not in filterState
+  // TODO: verify how keywords param appears in the URL
+
+  // === Buy-specific filters ===
+  // TODO: verify these on the buy page
+  // lot: rangeSchema — lot size
+  // built: rangeSchema — year built
+  // hoa: rangeSchema — HOA max
+  // gar: valueWrapper(z.boolean()) — garage
+  // ah: valueWrapper(z.boolean()) — accessible home
+  // sf: valueWrapper(z.boolean()) — single family
+  // att: valueWrapper(z.boolean()) — attached
+});
+
+export type ZillowFilterState = z.infer&lt;typeof zillowFilterStateSchema&gt;;
+
+// ---------------------------------------------------------------------------
+// Top-level search state schema
+// ---------------------------------------------------------------------------
+
+export const zillowParamsSchema = z.object({
+  citySlug: z
+    .string()
+    .describe(
+      "City slug for the URL path. Format: 'city-name-state' lowercase. " +
+        "Examples: 'new-york-ny', 'san-francisco-ca', 'miami-fl', 'los-angeles-ca'. " +
+        "Use knownLocations for common mappings.",
+    ),
+  regionSelection: z
+    .array(
+      z.object({
+        regionId: z.number().describe("Zillow region ID number."),
+        regionType: z
+          .number()
+          .optional()
+          .describe("Region type. 6 = city, 7 = neighborhood."),
+      }),
+    )
+    .optional()
+    .describe(
+      "Region selection for map-based results. " +
+        "Use knownLocations to find regionIds for major cities.",
+    ),
+  usersSearchTerm: z
+    .string()
+    .optional()
+    .describe(
+      "Search term displayed to user. Usually 'City, ST'. " +
+        "Example: 'New York, NY' or 'Brooklyn, NY'.",
+    ),
+  filterState: zillowFilterStateSchema.describe(
+    "Filter state object. Contains all search filters.",
+  ),
+  mapBounds: z
+    .object({
+      north: z.number(),
+      south: z.number(),
+      east: z.number(),
+      west: z.number(),
+    })
+    .optional()
+    .describe(
+      "Map viewport bounds. Usually omitted — Zillow auto-derives from region.",
+    ),
+  keywords: z
+    .string()
+    .optional()
+    .describe(
+      "Free-text keyword search. E.g. 'short term', 'furnished', 'rooftop'.",
+    ),
+});
+
+export type ZillowParams = z.infer&lt;typeof zillowParamsSchema&gt;;
+
+// ---------------------------------------------------------------------------
+// Serializer
+// ---------------------------------------------------------------------------
+
+function serializeZillowUrl(baseUrl: string, params: unknown): string {
+  const p = params as ZillowParams;
+
+  // Build the path: /{city-slug} for buy, /{city-slug}/rentals for rent
+  const isRental = p.filterState.fr?.value === true;
+  const pathSuffix = isRental ? "/rentals/" : "/";
+  const urlPath = `${baseUrl}/${p.citySlug}${pathSuffix}`;
+
+  // Build searchQueryState
+  const searchQueryState: Record&lt;string, unknown&gt; = {
+    pagination: {},
+    isMapVisible: true,
+    isListVisible: true,
+    filterState: p.filterState,
+  };
+
+  if (p.regionSelection) {
+    searchQueryState.regionSelection = p.regionSelection;
+  }
+  if (p.usersSearchTerm) {
+    searchQueryState.usersSearchTerm = p.usersSearchTerm;
+  }
+  if (p.mapBounds) {
+    searchQueryState.mapBounds = p.mapBounds;
+  }
+
+  const qs = new URLSearchParams();
+  qs.set("searchQueryState", JSON.stringify(searchQueryState));
+  return `${urlPath}?${qs.toString()}`;
+}
+
+// ---------------------------------------------------------------------------
+// Provider config
+// ---------------------------------------------------------------------------
+
+export const zillowConfig: ProviderUrlConfig = {
+  id: "zillow.com",
+  name: "Zillow",
+  baseUrls: {
+    buy: "https://www.zillow.com",
+    rent: "https://www.zillow.com",
+    // rent_short: not supported on Zillow
+  },
+  params: zillowParamsSchema,
+  serialize: serializeZillowUrl,
+  knownLocations: {
+    // === Cities (regionType: 6) ===
+    "New York, NY (new-york-ny)": "6181",
+    "Brooklyn, NY (brooklyn-new-york-ny)": "37607",
+    "Manhattan, NY (manhattan-new-york-ny)": "12530",
+    "San Francisco, CA (san-francisco-ca)": "20330",
+    "Los Angeles, CA (los-angeles-ca)": "12447",
+    "Miami, FL (miami-fl)": "12700",
+    "Chicago, IL (chicago-il)": "17426",
+    "Seattle, WA (seattle-wa)": "16037",
+    "Austin, TX (austin-tx)": "10221",
+    "Boston, MA (boston-ma)": "44269",
+    "Denver, CO (denver-co)": "11093",
+    "Portland, OR (portland-or)": "13373",
+    "Washington, DC (washington-dc)": "41070",
+
+    // === NYC — Manhattan neighborhoods (regionType: 7) — verified 2026-05-11 via Zillow autocomplete API ===
+    "Upper East Side, Manhattan": "270957",
+    "Upper West Side, Manhattan": "270958",
+    "Hell's Kitchen, Manhattan": "778997",
+    "Chelsea, Manhattan": "838067",
+    "East Village, Manhattan": "270829",
+    "West Village, Manhattan": "270964",
+    "Greenwich Village, Manhattan": "195133",
+    "SoHo, Manhattan": "270928",
+    "Tribeca, Manhattan": "270951",
+    "Lower East Side, Manhattan": "270875",
+    "Financial District, Manhattan": "270835",
+    "Midtown, Manhattan": "270885",
+    "Murray Hill, Manhattan": "274627",
+    "Gramercy, Manhattan": "273860",
+    "Flatiron District, Manhattan": "403206",
+    "Nolita, Manhattan": "838311",
+    "Chinatown, Manhattan": "193821",
+    "Little Italy, Manhattan": "270873",
+    "Battery Park, Manhattan": "272869",
+    "Hudson Yards, Manhattan": "778998",
+    "Harlem, Manhattan": "195267",
+    "East Harlem, Manhattan": "270828",
+    "Morningside Heights, Manhattan": "270891",
+    "Washington Heights, Manhattan": "198687",
+    "Inwood, Manhattan": "195576",
+    "Kips Bay, Manhattan": "838304",
+    "Turtle Bay, Manhattan": "270953",
+    "Sutton Place, Manhattan": "270946",
+    "Roosevelt Island, Manhattan": "20239",
+    "Stuyvesant Town, Manhattan": "403205",
+
+    // === NYC — Brooklyn neighborhoods (regionType: 7) — verified 2026-05-11 ===
+    "Williamsburg, Brooklyn": "199001",
+    "Greenpoint, Brooklyn": "270848",
+    "Brooklyn Heights, Brooklyn": "403122",
+    "DUMBO, Brooklyn": "270841",
+    "Park Slope, Brooklyn": "197044",
+    "Prospect Heights, Brooklyn": "403220",
+    "Crown Heights, Brooklyn": "403222",
+    "Bushwick, Brooklyn": "193587",
+    "Bedford-Stuyvesant, Brooklyn": "272902",
+    "Fort Greene, Brooklyn": "273766",
+    "Clinton Hill, Brooklyn": "270815",
+    "Cobble Hill, Brooklyn": "270816",
+    "Carroll Gardens, Brooklyn": "270811",
+    "Boerum Hill, Brooklyn": "272994",
+    "Red Hook, Brooklyn": "197427",
+    "Gowanus, Brooklyn": "270846",
+    "Sunset Park, Brooklyn": "270945",
+    "Bay Ridge, Brooklyn": "193189",
+    "Flatbush, Brooklyn": "194737",
+    "Ditmas Park, Brooklyn": "838383",
+    "Prospect Lefferts Gardens, Brooklyn": "403221",
+    "Windsor Terrace, Brooklyn": "270968",
+    "Kensington, Brooklyn": "403217",
+    "Bensonhurst, Brooklyn": "193285",
+    "Downtown Brooklyn": "270825",
+    "Prospect Park South, Brooklyn": "270914",
+    "Columbia St Waterfront, Brooklyn": "403219",
+
+    // === NYC — Queens neighborhoods (regionType: 7) — verified 2026-05-11 ===
+    "Astoria, Queens": "272816",
+    "Long Island City, Queens": "46301",
+    "Sunnyside, Queens": "275620",
+    "Jackson Heights, Queens": "274117",
+    "Flushing, Queens": "18131",
+    "Forest Hills, Queens": "273757",
+    "Ridgewood, Queens": "275173",
+    "Bayside, Queens": "37309",
+    "Woodside, Queens": "199091",
+
+    // === NYC — Bronx neighborhoods (regionType: 7) — verified 2026-05-11 ===
+    "Mott Haven, Bronx": "343204",
+
+    // === San Francisco neighborhoods (regionType: 7) — verified 2026-05-11 via Zillow autocomplete API ===
+    "Mission, San Francisco": "274552",
+    "Castro, San Francisco": "786313",
+    "Hayes Valley, San Francisco": "268206",
+    "South of Market (SOMA), San Francisco": "268491",
+    "Marina District, San Francisco": "274422",
+    "Noe Valley, San Francisco": "268338",
+    "Pacific Heights, San Francisco": "268385",
+    "Russian Hill, San Francisco": "268450",
+    "North Beach, San Francisco": "116918",
+    "Nob Hill, San Francisco": "268337",
+    "Inner Sunset, San Francisco": "268220",
+    "Outer Sunset, San Francisco": "268384",
+    "Inner Richmond, San Francisco": "268219",
+    "Outer Richmond, San Francisco": "268383",
+    "Potrero Hill, San Francisco": "268414",
+    "Dogpatch, San Francisco": "786298",
+    "Bernal Heights, San Francisco": "268020",
+    "Tenderloin, San Francisco": "417493",
+    "Financial District, San Francisco": "268156",
+    "Cow Hollow, San Francisco": "268096",
+    "Haight, San Francisco": "268201",
+    "Lower Haight, San Francisco": "786317",
+    "Japantown, San Francisco": "786318",
+    "Glen Park, San Francisco": "268177",
+    "Excelsior, San Francisco": "268150",
+    "Bayview, San Francisco": "272885",
+    "Mission Bay, San Francisco": "268305",
+    "South Beach, San Francisco": "207518",
+    "Presidio Heights, San Francisco": "268419",
+    "Laurel Heights, San Francisco": "417520",
+    "Cole Valley, San Francisco": "786328",
+    "Duboce Triangle, San Francisco": "417518",
+    "Western Addition, San Francisco": "118904",
+    "West of Twin Peaks, San Francisco": "268589",
+    "Forest Hill, San Francisco": "255961",
+    "Lake, San Francisco": "256657",
+    "Visitacion Valley, San Francisco": "268570",
+    "Portola, San Francisco": "117447",
+    "Crocker Amazon, San Francisco": "273404",
+    "Alamo Square, San Francisco": "417523",
+    "Chinatown, San Francisco": "114291",
+    "Civic Center, San Francisco": "786323",
+    "Hunters Point, San Francisco": "268218",
+    "Diamond Heights, San Francisco": "268110",
+    "Telegraph Hill, San Francisco": "268517",
+  },
+  multiNeighborhoodSupport: "single",
+  jsonLd: {
+    types: ["RealEstateListing", "Product", "BreadcrumbList"],
+    available: true,
+    fieldMap: {
+      "name": "title",
+      "url": "listingUrl",
+      "offers.itemOffered.@type": "propertyType",
+      "offers.itemOffered.floorSize": "floorSize",
+      "offers.itemOffered.numberOfBedrooms": "bedrooms",
+      "offers.itemOffered.address": "address",
+      "BreadcrumbList.itemListElement": "locationHierarchy",
+    },
+    notes:
+      "Bot-protected by PerimeterX — JSON-LD is only present when the HTML " +
+      "is successfully fetched (requires residential proxy or browser session). " +
+      "RealEstateListing contains the main listing data; BreadcrumbList " +
+      "provides the location hierarchy (state → city → neighborhood).",
+  },
+  promptGuidance: [
+    "- `knownLocations` mixes two types: whole-city entries (format like 'San Francisco, CA (san-francisco-ca): 20330') and neighborhood entries (format like 'Marina District, San Francisco: 274422'). They are NOT interchangeable.",
+    "- `citySlug` is REQUIRED — read it from the parenthetical of the city entry (e.g. 'san-francisco-ca' from 'San Francisco, CA (san-francisco-ca)').",
+    "- `regionSelection` is REQUIRED — never omit it. Without a region, Zillow has no geographic anchor and returns zero listings.",
+    "- **One neighborhood per URL.** Zillow's multi-region URL does NOT actually filter — passing 3 neighborhoods in `regionSelection` falls back to city-wide. The caller is responsible for fanning out to N URLs when the collection has N neighborhoods; you will be invoked once per neighborhood with a single entry in `Preferred neighborhoods`. Build `regionSelection` with that single neighborhood (`regionType: 7`).",
+    "- When the context still arrives with multiple neighborhoods (caller forgot to fan out), pick the first one — do NOT multi-region.",
+    "- When no preferred neighborhoods are listed: use the whole-city entry with `regionType: 6`.",
+    "- For property-type flags (`tow`, `con`, `apa`, `apco`, `mf`): OMIT them entirely to include all types (Zillow's default). Only set to `false` to EXCLUDE a type.",
+    "- **Amenity filters (`lau`, `ac`, `os`, `pool`, `parka`, `dish`, `hrdwd`, `fit`, etc.) are EXTREMELY aggressive at neighborhood level — each one cuts inventory by 50-80%.** Verified empirically: `lau: { value: true }` on Hell's Kitchen (thousands of rentals) returned zero results. Set at most 1 amenity flag, and only when the user named it as an absolute dealbreaker. For nice-to-haves, OMIT them entirely — post-import scoring against the story handles them more accurately than portal filters do.",
+    "- For STUDIOS, set `beds: { min: 0, max: 0 }` explicitly. A missing `min` defaults to 'any' and breaks the filter. Same shape for '1BR only': `{ min: 1, max: 1 }`.",
+  ].join("\n"),
+  examples: [
+    {
+      description: "Rent in SF, 2BR, max $4,200/mo, neighborhood = ['Marina District']",
+      params: {
+        citySlug: "san-francisco-ca",
+        usersSearchTerm: "San Francisco, CA",
+        regionSelection: [{ regionId: 274422, regionType: 7 }],
+        filterState: {
+          fr: { value: true },
+          mp: { max: 4200 },
+          beds: { min: 2 },
+          sort: { value: "days" },
+        },
+      },
+    },
+    {
+      description: "Buy in NYC, no neighborhoods specified, budget $1.5M",
+      params: {
+        citySlug: "new-york-ny",
+        usersSearchTerm: "New York, NY",
+        regionSelection: [{ regionId: 6181, regionType: 6 }],
+        filterState: {
+          price: { max: 1500000 },
+          beds: { min: 1 },
+        },
+      },
+    },
+    {
+      description: "Rent in SF, single neighborhood = ['Cow Hollow']",
+      params: {
+        citySlug: "san-francisco-ca",
+        usersSearchTerm: "San Francisco, CA",
+        regionSelection: [{ regionId: 268096, regionType: 7 }],
+        filterState: {
+          fr: { value: true },
+          mp: { max: 4200 },
+          beds: { min: 2 },
+        },
+      },
+    },
+  ],
+};
+
+const valueWrapper = &lt;T extends z.ZodTypeAny&gt;(inner: T) =&gt;
+  z.object({ value: inner });
+
+const rangeSchema = z.object({
+  min: z.number().nullable().optional(),
+  max: z.number().nullable().optional(),
+});
+
+export const zillowFilterStateSchema = z.object({
+  // === Search mode ===
+  fr: valueWrapper(z.boolean())
+    .optional()
+    .describe("For rent mode. Set { value: true } for rental searches."),
+
+  // === Sale type flags ===
+  // IMPORTANT: Omit these entirely unless the user explicitly asks to filter
+  // by sale type. Zillow's defaults handle the common case. Only set to
+  // { value: true } to include a specific type, or { value: false } to exclude it.
+  fsba: valueWrapper(z.boolean())
+    .optional()
+    .describe("For sale by agent. Omit to use default (included for buy, excluded for rent)."),
+  fsbo: valueWrapper(z.boolean())
+    .optional()
+    .describe("For sale by owner. Omit to use default."),
+  nc: valueWrapper(z.boolean())
+    .optional()
+    .describe("New construction only. Omit unless user specifically wants new builds."),
+  cmsn: valueWrapper(z.boolean())
+    .optional()
+    .describe("Coming soon listings. Omit unless user specifically wants pre-market."),
+  auc: valueWrapper(z.boolean())
+    .optional()
+    .describe("Auction listings. Omit unless user specifically wants auctions."),
+  fore: valueWrapper(z.boolean())
+    .optional()
+    .describe("Foreclosures. Omit unless user specifically wants foreclosures."),
+
+  // === Price ===
+  price: rangeSchema
+    .optional()
+    .describe(
+      "Buy only. Asking price range in USD. Example: { min: 300000, max: 800000 }.",
+    ),
+  mp: rangeSchema
+    .optional()
+    .describe(
+      "Rent only. Monthly rent range in USD. Example: { min: 1500, max: 4000 }.",
+    ),
+
+  // === Beds &amp; Baths ===
+  beds: rangeSchema
+    .optional()
+    .describe("Bedroom count range. Example: { min: 2 } for 2+ beds."),
+  baths: rangeSchema
+    .optional()
+    .describe(
+      "Bathroom count range. Supports decimals like 1.5. Example: { min: 1 }.",
+    ),
+
+  // === Home size ===
+  sqft: rangeSchema
+    .optional()
+    .describe(
+      "Square footage range. Example: { min: 800, max: 2000 }. " +
+        "Convert from metric: 1 m² ≈ 10.764 sqft.",
+    ),
+
+  // === Sort ===
+  sort: valueWrapper(z.string())
+    .optional()
+    .describe(
+      "Sort order. Common values: " +
+        "'priorityscore' (default rental), 'personalizedsort' (personalized), " +
+        "'days' (newest), 'priced' (price desc), 'pricea' (price asc), " +
+        "'globalrelevanceex' (relevance).",
+    ),
+
+  // === Property type (rental) ===
+  // Zillow uses exclusion-based property filtering — omit = include.
+  // "Houses" selected → set apa, con, apco, tow to false
+  // "Apartments/Condos" selected → set tow to false
+  // "Townhomes" → set apa, con, apco to false
+  tow: valueWrapper(z.boolean())
+    .optional()
+    .describe("Include townhomes. Omit or true = include, false = exclude."),
+  con: valueWrapper(z.boolean())
+    .optional()
+    .describe("Include condos. Omit or true = include, false = exclude."),
+  apa: valueWrapper(z.boolean())
+    .optional()
+    .describe("Include apartments. Omit or true = include, false = exclude."),
+  apco: valueWrapper(z.boolean())
+    .optional()
+    .describe(
+      "Include apartments/condos combined. Omit or true = include, false = exclude.",
+    ),
+  mf: valueWrapper(z.boolean())
+    .optional()
+    .describe("Include multi-family properties. Omit to use default."),
+  land: valueWrapper(z.boolean())
+    .optional()
+    .describe("Include land/lots. Omit to use default."),
+  manu: valueWrapper(z.boolean())
+    .optional()
+    .describe("Include manufactured homes. Omit to use default."),
+
+  // === Space type (rental) ===
+  r4r: valueWrapper(z.boolean())
+    .optional()
+    .describe(
+      "Room for rent. Set { value: true } to show rooms instead of whole units.",
+    ),
+  r4re: valueWrapper(z.boolean())
+    .optional()
+    .describe(
+      "Entire place. Set { value: false } when room-for-rent is selected.",
+    ),
+
+  // === Pets ===
+  sdog: valueWrapper(z.boolean()).optional().describe("Allows small dogs."),
+  ldog: valueWrapper(z.boolean()).optional().describe("Allows large dogs."),
+  cat: valueWrapper(z.boolean()).optional().describe("Allows cats."),
+  np: valueWrapper(z.boolean())
+    .optional()
+    .describe("No pets allowed (filter for pet-free buildings)."),
+
+  // === Popular amenities ===
+  lau: valueWrapper(z.boolean()).optional().describe("In-unit laundry."),
+  ac: valueWrapper(z.boolean())
+    .optional()
+    .describe("Must have A/C (air conditioning)."),
+  parka: valueWrapper(z.boolean()).optional().describe("On-site parking."),
+
+  // === Standard amenities ===
+  eaa: valueWrapper(z.boolean()).optional().describe("Elevator."),
+  pool: valueWrapper(z.boolean()).optional().describe("Pool."),
+  wat: valueWrapper(z.boolean()).optional().describe("Waterfront."),
+  fur: valueWrapper(z.boolean()).optional().describe("Furnished."),
+  hsia: valueWrapper(z.boolean()).optional().describe("High speed internet."),
+  // Basement triggers 3 keys simultaneously
+  hbas: valueWrapper(z.boolean())
+    .optional()
+    .describe("Has basement (part 1 of 3 — set hbas, basf, basu together)."),
+  basf: valueWrapper(z.boolean())
+    .optional()
+    .describe("Basement finished (part 2 of 3 — set with hbas and basu)."),
+  basu: valueWrapper(z.boolean())
+    .optional()
+    .describe("Basement unfinished (part 3 of 3 — set with hbas and basf)."),
+  uti: valueWrapper(z.boolean()).optional().describe("Utilities included."),
+  hrdwd: valueWrapper(z.boolean()).optional().describe("Hardwood floors."),
+  fit: valueWrapper(z.boolean()).optional().describe("Fitness center."),
+  os: valueWrapper(z.boolean()).optional().describe("Outdoor space."),
+  dish: valueWrapper(z.boolean()).optional().describe("Dishwasher."),
+
+  // === Views ===
+  cityv: valueWrapper(z.boolean()).optional().describe("City view."),
+  mouv: valueWrapper(z.boolean()).optional().describe("Mountain view."),
+  parkv: valueWrapper(z.boolean()).optional().describe("Park view."),
+  watv: valueWrapper(z.boolean()).optional().describe("Water view."),
+
+  // === Property details ===
+  sto: valueWrapper(z.boolean()).optional().describe("Single-story only."),
+
+  // === Accessibility &amp; community ===
+  disac: valueWrapper(z.boolean())
+    .optional()
+    .describe("Disabled access / ADA accessible."),
+  inc: valueWrapper(z.boolean())
+    .optional()
+    .describe("Income restricted / affordable housing."),
+  fmfb: valueWrapper(z.boolean())
+    .optional()
+    .describe("Apartment community (featured multi-family building)."),
+  ca: valueWrapper(z.boolean())
+    .optional()
+    .describe("Controlled access / gated entry."),
+
+  // === Listing details ===
+  "3d": valueWrapper(z.boolean())
+    .optional()
+    .describe("Has 3D tour / virtual tour."),
+  app: valueWrapper(z.boolean())
+    .optional()
+    .describe("Accepts Zillow applications (rental)."),
+  ita: valueWrapper(z.boolean())
+    .optional()
+    .describe("Instant tour available (rental)."),
+  stl: valueWrapper(z.boolean())
+    .optional()
+    .describe("Short term lease available (rental)."),
+
+  // === Time on Zillow ===
+  doz: valueWrapper(z.string())
+    .optional()
+    .describe(
+      "Days on Zillow. String values: " +
+        "'1' (1 day), '7' (7 days), '14' (14 days), '30' (30 days), " +
+        "'90' (90 days), '180' (6 months), '365' (12 months), " +
+        "'730' (24 months), '1095' (36 months).",
+    ),
+
+  // === Move-in date (rental) ===
+  rad: valueWrapper(z.string())
+    .optional()
+    .describe("Move-in date as ISO date string 'YYYY-MM-DD'."),
+
+  // === 55+ Communities ===
+  // pmf and pf appear in default state — likely related to senior communities
+  pmf: valueWrapper(z.boolean())
+    .optional()
+    .describe("Exclude park/mobile/manufactured homes. Omit to use default."),
+  pf: valueWrapper(z.boolean())
+    .optional()
+    .describe("Pre-foreclosure. Omit to use default."),
+
+  // === Keywords ===
+  // Keywords are passed as a separate param, not in filterState
+  // TODO: verify how keywords param appears in the URL
+
+  // === Buy-specific filters ===
+  // TODO: verify these on the buy page
+  // lot: rangeSchema — lot size
+  // built: rangeSchema — year built
+  // hoa: rangeSchema — HOA max
+  // gar: valueWrapper(z.boolean()) — garage
+  // ah: valueWrapper(z.boolean()) — accessible home
+  // sf: valueWrapper(z.boolean()) — single family
+  // att: valueWrapper(z.boolean()) — attached
+});
+
+export type ZillowFilterState = z.infer&lt;typeof zillowFilterStateSchema&gt;;
+
+export const zillowParamsSchema = z.object({
+  citySlug: z
+    .string()
+    .describe(
+      "City slug for the URL path. Format: 'city-name-state' lowercase. " +
+        "Examples: 'new-york-ny', 'san-francisco-ca', 'miami-fl', 'los-angeles-ca'. " +
+        "Use knownLocations for common mappings.",
+    ),
+  regionSelection: z
+    .array(
+      z.object({
+        regionId: z.number().describe("Zillow region ID number."),
+        regionType: z
+          .number()
+          .optional()
+          .describe("Region type. 6 = city, 7 = neighborhood."),
+      }),
+    )
+    .optional()
+    .describe(
+      "Region selection for map-based results. " +
+        "Use knownLocations to find regionIds for major cities.",
+    ),
+  usersSearchTerm: z
+    .string()
+    .optional()
+    .describe(
+      "Search term displayed to user. Usually 'City, ST'. " +
+        "Example: 'New York, NY' or 'Brooklyn, NY'.",
+    ),
+  filterState: zillowFilterStateSchema.describe(
+    "Filter state object. Contains all search filters.",
+  ),
+  mapBounds: z
+    .object({
+      north: z.number(),
+      south: z.number(),
+      east: z.number(),
+      west: z.number(),
+    })
+    .optional()
+    .describe(
+      "Map viewport bounds. Usually omitted — Zillow auto-derives from region.",
+    ),
+  keywords: z
+    .string()
+    .optional()
+    .describe(
+      "Free-text keyword search. E.g. 'short term', 'furnished', 'rooftop'.",
+    ),
+});
+
+export type ZillowParams = z.infer&lt;typeof zillowParamsSchema&gt;;</code></pre>
+    </section>
+
+    <section id="serializer">
+      <h2>🔗 Serializer</h2>
+      <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 16px;">How structured params become a valid search URL.</p>
+      <pre><code>function serializeZillowUrl(baseUrl: string, params: unknown): string {
+  const p = params as ZillowParams;
+
+  // Build the path: /{city-slug} for buy, /{city-slug}/rentals for rent
+  const isRental = p.filterState.fr?.value === true;
+  const pathSuffix = isRental ? "/rentals/" : "/";
+  const urlPath = `${baseUrl}/${p.citySlug}${pathSuffix}`;
+
+  // Build searchQueryState
+  const searchQueryState: Record&lt;string, unknown&gt; = {
+    pagination: {},
+    isMapVisible: true,
+    isListVisible: true,
+    filterState: p.filterState,
+  };
+
+  if (p.regionSelection) {
+    searchQueryState.regionSelection = p.regionSelection;
+  }
+  if (p.usersSearchTerm) {
+    searchQueryState.usersSearchTerm = p.usersSearchTerm;
+  }
+  if (p.mapBounds) {
+    searchQueryState.mapBounds = p.mapBounds;
+  }
+
+  const qs = new URLSearchParams();
+  qs.set("searchQueryState", JSON.stringify(searchQueryState));
+  return `${urlPath}?${qs.toString()}`;
+}</code></pre>
+    </section>
+
+    <section id="config">
+      <h2>⚙️ Config & Known Locations</h2>
+      <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 16px;">Base URLs, verified location codes, and AI prompt guidance.</p>
+      <pre><code>export const zillowConfig: ProviderUrlConfig = {
+  id: "zillow.com",
+  name: "Zillow",
+  baseUrls: {
+    buy: "https://www.zillow.com",
+    rent: "https://www.zillow.com",
+    // rent_short: not supported on Zillow
+  },
+  params: zillowParamsSchema,
+  serialize: serializeZillowUrl,
+  knownLocations: {
+    // === Cities (regionType: 6) ===
+    "New York, NY (new-york-ny)": "6181",
+    "Brooklyn, NY (brooklyn-new-york-ny)": "37607",
+    "Manhattan, NY (manhattan-new-york-ny)": "12530",
+    "San Francisco, CA (san-francisco-ca)": "20330",
+    "Los Angeles, CA (los-angeles-ca)": "12447",
+    "Miami, FL (miami-fl)": "12700",
+    "Chicago, IL (chicago-il)": "17426",
+    "Seattle, WA (seattle-wa)": "16037",
+    "Austin, TX (austin-tx)": "10221",
+    "Boston, MA (boston-ma)": "44269",
+    "Denver, CO (denver-co)": "11093",
+    "Portland, OR (portland-or)": "13373",
+    "Washington, DC (washington-dc)": "41070",
+
+    // === NYC — Manhattan neighborhoods (regionType: 7) — verified 2026-05-11 via Zillow autocomplete API ===
+    "Upper East Side, Manhattan": "270957",
+    "Upper West Side, Manhattan": "270958",
+    "Hell's Kitchen, Manhattan": "778997",
+    "Chelsea, Manhattan": "838067",
+    "East Village, Manhattan": "270829",
+    "West Village, Manhattan": "270964",
+    "Greenwich Village, Manhattan": "195133",
+    "SoHo, Manhattan": "270928",
+    "Tribeca, Manhattan": "270951",
+    "Lower East Side, Manhattan": "270875",
+    "Financial District, Manhattan": "270835",
+    "Midtown, Manhattan": "270885",
+    "Murray Hill, Manhattan": "274627",
+    "Gramercy, Manhattan": "273860",
+    "Flatiron District, Manhattan": "403206",
+    "Nolita, Manhattan": "838311",
+    "Chinatown, Manhattan": "193821",
+    "Little Italy, Manhattan": "270873",
+    "Battery Park, Manhattan": "272869",
+    "Hudson Yards, Manhattan": "778998",
+    "Harlem, Manhattan": "195267",
+    "East Harlem, Manhattan": "270828",
+    "Morningside Heights, Manhattan": "270891",
+    "Washington Heights, Manhattan": "198687",
+    "Inwood, Manhattan": "195576",
+    "Kips Bay, Manhattan": "838304",
+    "Turtle Bay, Manhattan": "270953",
+    "Sutton Place, Manhattan": "270946",
+    "Roosevelt Island, Manhattan": "20239",
+    "Stuyvesant Town, Manhattan": "403205",
+
+    // === NYC — Brooklyn neighborhoods (regionType: 7) — verified 2026-05-11 ===
+    "Williamsburg, Brooklyn": "199001",
+    "Greenpoint, Brooklyn": "270848",
+    "Brooklyn Heights, Brooklyn": "403122",
+    "DUMBO, Brooklyn": "270841",
+    "Park Slope, Brooklyn": "197044",
+    "Prospect Heights, Brooklyn": "403220",
+    "Crown Heights, Brooklyn": "403222",
+    "Bushwick, Brooklyn": "193587",
+    "Bedford-Stuyvesant, Brooklyn": "272902",
+    "Fort Greene, Brooklyn": "273766",
+    "Clinton Hill, Brooklyn": "270815",
+    "Cobble Hill, Brooklyn": "270816",
+    "Carroll Gardens, Brooklyn": "270811",
+    "Boerum Hill, Brooklyn": "272994",
+    "Red Hook, Brooklyn": "197427",
+    "Gowanus, Brooklyn": "270846",
+    "Sunset Park, Brooklyn": "270945",
+    "Bay Ridge, Brooklyn": "193189",
+    "Flatbush, Brooklyn": "194737",
+    "Ditmas Park, Brooklyn": "838383",
+    "Prospect Lefferts Gardens, Brooklyn": "403221",
+    "Windsor Terrace, Brooklyn": "270968",
+    "Kensington, Brooklyn": "403217",
+    "Bensonhurst, Brooklyn": "193285",
+    "Downtown Brooklyn": "270825",
+    "Prospect Park South, Brooklyn": "270914",
+    "Columbia St Waterfront, Brooklyn": "403219",
+
+    // === NYC — Queens neighborhoods (regionType: 7) — verified 2026-05-11 ===
+    "Astoria, Queens": "272816",
+    "Long Island City, Queens": "46301",
+    "Sunnyside, Queens": "275620",
+    "Jackson Heights, Queens": "274117",
+    "Flushing, Queens": "18131",
+    "Forest Hills, Queens": "273757",
+    "Ridgewood, Queens": "275173",
+    "Bayside, Queens": "37309",
+    "Woodside, Queens": "199091",
+
+    // === NYC — Bronx neighborhoods (regionType: 7) — verified 2026-05-11 ===
+    "Mott Haven, Bronx": "343204",
+
+    // === San Francisco neighborhoods (regionType: 7) — verified 2026-05-11 via Zillow autocomplete API ===
+    "Mission, San Francisco": "274552",
+    "Castro, San Francisco": "786313",
+    "Hayes Valley, San Francisco": "268206",
+    "South of Market (SOMA), San Francisco": "268491",
+    "Marina District, San Francisco": "274422",
+    "Noe Valley, San Francisco": "268338",
+    "Pacific Heights, San Francisco": "268385",
+    "Russian Hill, San Francisco": "268450",
+    "North Beach, San Francisco": "116918",
+    "Nob Hill, San Francisco": "268337",
+    "Inner Sunset, San Francisco": "268220",
+    "Outer Sunset, San Francisco": "268384",
+    "Inner Richmond, San Francisco": "268219",
+    "Outer Richmond, San Francisco": "268383",
+    "Potrero Hill, San Francisco": "268414",
+    "Dogpatch, San Francisco": "786298",
+    "Bernal Heights, San Francisco": "268020",
+    "Tenderloin, San Francisco": "417493",
+    "Financial District, San Francisco": "268156",
+    "Cow Hollow, San Francisco": "268096",
+    "Haight, San Francisco": "268201",
+    "Lower Haight, San Francisco": "786317",
+    "Japantown, San Francisco": "786318",
+    "Glen Park, San Francisco": "268177",
+    "Excelsior, San Francisco": "268150",
+    "Bayview, San Francisco": "272885",
+    "Mission Bay, San Francisco": "268305",
+    "South Beach, San Francisco": "207518",
+    "Presidio Heights, San Francisco": "268419",
+    "Laurel Heights, San Francisco": "417520",
+    "Cole Valley, San Francisco": "786328",
+    "Duboce Triangle, San Francisco": "417518",
+    "Western Addition, San Francisco": "118904",
+    "West of Twin Peaks, San Francisco": "268589",
+    "Forest Hill, San Francisco": "255961",
+    "Lake, San Francisco": "256657",
+    "Visitacion Valley, San Francisco": "268570",
+    "Portola, San Francisco": "117447",
+    "Crocker Amazon, San Francisco": "273404",
+    "Alamo Square, San Francisco": "417523",
+    "Chinatown, San Francisco": "114291",
+    "Civic Center, San Francisco": "786323",
+    "Hunters Point, San Francisco": "268218",
+    "Diamond Heights, San Francisco": "268110",
+    "Telegraph Hill, San Francisco": "268517",
+  },
+  multiNeighborhoodSupport: "single",
+  jsonLd: {
+    types: ["RealEstateListing", "Product", "BreadcrumbList"],
+    available: true,
+    fieldMap: {
+      "name": "title",
+      "url": "listingUrl",
+      "offers.itemOffered.@type": "propertyType",
+      "offers.itemOffered.floorSize": "floorSize",
+      "offers.itemOffered.numberOfBedrooms": "bedrooms",
+      "offers.itemOffered.address": "address",
+      "BreadcrumbList.itemListElement": "locationHierarchy",
+    },
+    notes:
+      "Bot-protected by PerimeterX — JSON-LD is only present when the HTML " +
+      "is successfully fetched (requires residential proxy or browser session). " +
+      "RealEstateListing contains the main listing data; BreadcrumbList " +
+      "provides the location hierarchy (state → city → neighborhood).",
+  },
+  promptGuidance: [
+    "- `knownLocations` mixes two types: whole-city entries (format like 'San Francisco, CA (san-francisco-ca): 20330') and neighborhood entries (format like 'Marina District, San Francisco: 274422'). They are NOT interchangeable.",
+    "- `citySlug` is REQUIRED — read it from the parenthetical of the city entry (e.g. 'san-francisco-ca' from 'San Francisco, CA (san-francisco-ca)').",
+    "- `regionSelection` is REQUIRED — never omit it. Without a region, Zillow has no geographic anchor and returns zero listings.",
+    "- **One neighborhood per URL.** Zillow's multi-region URL does NOT actually filter — passing 3 neighborhoods in `regionSelection` falls back to city-wide. The caller is responsible for fanning out to N URLs when the collection has N neighborhoods; you will be invoked once per neighborhood with a single entry in `Preferred neighborhoods`. Build `regionSelection` with that single neighborhood (`regionType: 7`).",
+    "- When the context still arrives with multiple neighborhoods (caller forgot to fan out), pick the first one — do NOT multi-region.",
+    "- When no preferred neighborhoods are listed: use the whole-city entry with `regionType: 6`.",
+    "- For property-type flags (`tow`, `con`, `apa`, `apco`, `mf`): OMIT them entirely to include all types (Zillow's default). Only set to `false` to EXCLUDE a type.",
+    "- **Amenity filters (`lau`, `ac`, `os`, `pool`, `parka`, `dish`, `hrdwd`, `fit`, etc.) are EXTREMELY aggressive at neighborhood level — each one cuts inventory by 50-80%.** Verified empirically: `lau: { value: true }` on Hell's Kitchen (thousands of rentals) returned zero results. Set at most 1 amenity flag, and only when the user named it as an absolute dealbreaker. For nice-to-haves, OMIT them entirely — post-import scoring against the story handles them more accurately than portal filters do.",
+    "- For STUDIOS, set `beds: { min: 0, max: 0 }` explicitly. A missing `min` defaults to 'any' and breaks the filter. Same shape for '1BR only': `{ min: 1, max: 1 }`.",
+  ].join("\n"),
+  examples: [
+    {
+      description: "Rent in SF, 2BR, max $4,200/mo, neighborhood = ['Marina District']",
+      params: {
+        citySlug: "san-francisco-ca",
+        usersSearchTerm: "San Francisco, CA",
+        regionSelection: [{ regionId: 274422, regionType: 7 }],
+        filterState: {
+          fr: { value: true },
+          mp: { max: 4200 },
+          beds: { min: 2 },
+          sort: { value: "days" },
+        },
+      },
+    },
+    {
+      description: "Buy in NYC, no neighborhoods specified, budget $1.5M",
+      params: {
+        citySlug: "new-york-ny",
+        usersSearchTerm: "New York, NY",
+        regionSelection: [{ regionId: 6181, regionType: 6 }],
+        filterState: {
+          price: { max: 1500000 },
+          beds: { min: 1 },
+        },
+      },
+    },
+    {
+      description: "Rent in SF, single neighborhood = ['Cow Hollow']",
+      params: {
+        citySlug: "san-francisco-ca",
+        usersSearchTerm: "San Francisco, CA",
+        regionSelection: [{ regionId: 268096, regionType: 7 }],
+        filterState: {
+          fr: { value: true },
+          mp: { max: 4200 },
+          beds: { min: 2 },
+        },
+      },
+    },
+  ],
+};</code></pre>
+    </section>
+
+    <footer>
+      <p>Part of <a href="https://www.npmjs.com/package/@use_homi/real-estate-portal-schemas">@use_homi/real-estate-portal-schemas</a> — built by <a href="https://homi.so">Homi</a>.</p>
+      <p style="margin-top: 8px;"><a href="https://github.com/Boe-Ventures/real-estate-portal-schemas">GitHub</a> · <a href="../">All Portals</a></p>
+    </footer>
+  </div>
+  
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('pre code').forEach(function(block) {
+    var code = block.innerHTML;
+    // Tokenize to avoid conflicts
+    var tokens = [];
+    var i = 0;
+    while (i < code.length) {
+      // HTML tags (preserve existing spans)
+      if (code[i] === '<') {
+        var end = code.indexOf('>', i);
+        if (end !== -1) {
+          tokens.push({ type: 'html', text: code.slice(i, end + 1) });
+          i = end + 1;
+          continue;
+        }
+      }
+      // Line comments
+      if (code[i] === '/' && code[i+1] === '/') {
+        var nlPos = code.indexOf('\n', i);
+        var commentEnd = nlPos === -1 ? code.length : nlPos;
+        tokens.push({ type: 'comment', text: code.slice(i, commentEnd) });
+        i = commentEnd;
+        continue;
+      }
+      // Block comments
+      if (code[i] === '/' && code[i+1] === '*') {
+        var bcEnd = code.indexOf('*/', i + 2);
+        bcEnd = bcEnd === -1 ? code.length : bcEnd + 2;
+        tokens.push({ type: 'comment', text: code.slice(i, bcEnd) });
+        i = bcEnd;
+        continue;
+      }
+      // Double-quoted strings
+      if (code[i] === '&' && code.slice(i, i+6) === '&quot;') {
+        var si = i + 6;
+        while (si < code.length) {
+          if (code[si] === '\\') { si += 2; continue; }
+          if (code.slice(si, si+6) === '&quot;') { si += 6; break; }
+          si++;
+        }
+        tokens.push({ type: 'string', text: code.slice(i, si) });
+        i = si;
+        continue;
+      }
+      // Regular double-quoted strings
+      if (code[i] === '"') {
+        var si = i + 1;
+        while (si < code.length && code[si] !== '"') {
+          if (code[si] === '\\') si++;
+          si++;
+        }
+        tokens.push({ type: 'string', text: code.slice(i, si + 1) });
+        i = si + 1;
+        continue;
+      }
+      // Single-quoted strings
+      if (code[i] === "'") {
+        var si = i + 1;
+        while (si < code.length && code[si] !== "'") {
+          if (code[si] === '\\') si++;
+          si++;
+        }
+        tokens.push({ type: 'string', text: code.slice(i, si + 1) });
+        i = si + 1;
+        continue;
+      }
+      // Backtick template literals
+      if (code[i] === '`') {
+        var si = i + 1;
+        while (si < code.length && code[si] !== '`') {
+          if (code[si] === '\\') si++;
+          si++;
+        }
+        tokens.push({ type: 'string', text: code.slice(i, si + 1) });
+        i = si + 1;
+        continue;
+      }
+      // Numbers
+      if (/[0-9]/.test(code[i]) && (i === 0 || /[\s:,=([{+\-*\/|&!<>]/.test(code[i-1]))) {
+        var ni = i;
+        while (ni < code.length && /[0-9._]/.test(code[ni])) ni++;
+        tokens.push({ type: 'number', text: code.slice(i, ni) });
+        i = ni;
+        continue;
+      }
+      // Words (keywords, identifiers)
+      if (/[a-zA-Z_$]/.test(code[i])) {
+        var wi = i;
+        while (wi < code.length && /[a-zA-Z0-9_$]/.test(code[wi])) wi++;
+        var word = code.slice(i, wi);
+        var keywords = ['import','from','export','const','let','var','function','return','if','else','as','new','true','false','null','undefined','typeof','async','await','type','interface','enum','extends','implements','class','static','readonly','void','delete','throw','try','catch','finally','for','while','do','switch','case','break','continue','default','in','of','instanceof','yield'];
+        if (keywords.indexOf(word) !== -1) {
+          tokens.push({ type: 'keyword', text: word });
+        } else if (wi < code.length && code[wi] === '(') {
+          tokens.push({ type: 'fn', text: word });
+        } else {
+          tokens.push({ type: 'plain', text: word });
+        }
+        i = wi;
+        continue;
+      }
+      tokens.push({ type: 'plain', text: code[i] });
+      i++;
+    }
+    // Rebuild
+    block.innerHTML = tokens.map(function(t) {
+      if (t.type === 'html' || t.type === 'plain') return t.text;
+      return '<span class="' + t.type + '">' + t.text + '</span>';
+    }).join('');
+  });
+
+  // Show expand buttons for tall code blocks
+  document.querySelectorAll('pre').forEach(function(pre) {
+    if (pre.scrollHeight > 620) {
+      var btn = document.createElement('button');
+      btn.className = 'expand-btn';
+      btn.textContent = '↓ Show all (' + pre.querySelectorAll('code')[0].textContent.split('\n').length + ' lines)';
+      btn.style.display = 'block';
+      btn.onclick = function() {
+        pre.classList.toggle('expanded');
+        btn.textContent = pre.classList.contains('expanded') ? '↑ Collapse' : '↓ Show all';
+      };
+      pre.after(btn);
+    }
+  });
+});
+</script>
+
+</body>
+</html>

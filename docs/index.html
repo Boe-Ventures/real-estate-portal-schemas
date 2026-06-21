@@ -164,11 +164,41 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 20px;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, transform 0.2s;
     }
 
     .portal-card:hover {
       border-color: var(--accent);
+    }
+
+    a.portal-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    a.portal-card-link .portal-card {
+      cursor: pointer;
+    }
+
+    a.portal-card-link:hover .portal-card {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    a.portal-card-link .view-code {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 12px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    a.portal-card-link:hover .view-code {
+      opacity: 1;
     }
 
     .portal-card h3 {
@@ -293,6 +323,7 @@
     .comment { color: #525252; }
     .fn { color: #60a5fa; }
 
+
     /* Use cases */
     .use-cases {
       padding: 48px 0;
@@ -391,57 +422,72 @@
       <h2>Supported Portals</h2>
       <p class="subtitle">Full Zod schemas with serializers, location codes, and AI-friendly <code>.describe()</code> hints. Plus base URLs for 30+ additional providers.</p>
       <div class="portal-grid">
-        <div class="portal-card">
-          <h3>Finn.no</h3>
-          <div class="country">🇳🇴 Norway</div>
-          <div class="tags">
-            <span class="tag green">Buy</span>
-            <span class="tag green">Rent</span>
-            <span class="tag">30+ params</span>
-            <span class="tag">39 neighborhoods</span>
-            <span class="tag purple">Adapter</span>
+        <a class="portal-card-link" href="portals/finn-no.html">
+          <div class="portal-card">
+            <h3>Finn.no</h3>
+            <div class="country">🇳🇴 Norway</div>
+            <div class="tags">
+              <span class="tag green">Buy</span>
+              <span class="tag green">Rent</span>
+              <span class="tag">30+ params</span>
+              <span class="tag">39 neighborhoods</span>
+              <span class="tag purple">Adapter</span>
+            </div>
+            <div class="view-code">View source code →</div>
           </div>
-        </div>
-        <div class="portal-card">
-          <h3>Zillow</h3>
-          <div class="country">🇺🇸 United States</div>
-          <div class="tags">
-            <span class="tag green">Buy</span>
-            <span class="tag green">Rent</span>
-            <span class="tag">37 filters</span>
-            <span class="tag">115+ neighborhoods</span>
-            <span class="tag purple">Adapter</span>
+        </a>
+        <a class="portal-card-link" href="portals/zillow.html">
+          <div class="portal-card">
+            <h3>Zillow</h3>
+            <div class="country">🇺🇸 United States</div>
+            <div class="tags">
+              <span class="tag green">Buy</span>
+              <span class="tag green">Rent</span>
+              <span class="tag">37 filters</span>
+              <span class="tag">115+ neighborhoods</span>
+              <span class="tag purple">Adapter</span>
+            </div>
+            <div class="view-code">View source code →</div>
           </div>
-        </div>
-        <div class="portal-card">
-          <h3>StreetEasy</h3>
-          <div class="country">🇺🇸 New York City</div>
-          <div class="tags">
-            <span class="tag green">Buy</span>
-            <span class="tag green">Rent</span>
-            <span class="tag">Path DSL</span>
-            <span class="tag">All NYC boroughs</span>
+        </a>
+        <a class="portal-card-link" href="portals/streeteasy.html">
+          <div class="portal-card">
+            <h3>StreetEasy</h3>
+            <div class="country">🇺🇸 New York City</div>
+            <div class="tags">
+              <span class="tag green">Buy</span>
+              <span class="tag green">Rent</span>
+              <span class="tag">Path DSL</span>
+              <span class="tag">All NYC boroughs</span>
+            </div>
+            <div class="view-code">View source code →</div>
           </div>
-        </div>
-        <div class="portal-card">
-          <h3>Airbnb</h3>
-          <div class="country">🌍 Global</div>
-          <div class="tags">
-            <span class="tag green">Rent</span>
-            <span class="tag green">Short-term</span>
-            <span class="tag">591 amenities</span>
-            <span class="tag">30+ cities</span>
+        </a>
+        <a class="portal-card-link" href="portals/airbnb.html">
+          <div class="portal-card">
+            <h3>Airbnb</h3>
+            <div class="country">🌍 Global</div>
+            <div class="tags">
+              <span class="tag green">Rent</span>
+              <span class="tag green">Short-term</span>
+              <span class="tag">591 amenities</span>
+              <span class="tag">30+ cities</span>
+            </div>
+            <div class="view-code">View source code →</div>
           </div>
-        </div>
-        <div class="portal-card">
-          <h3>Booking.com</h3>
-          <div class="country">🌍 Global</div>
-          <div class="tags">
-            <span class="tag green">Short-term</span>
-            <span class="tag">Compound nflt param</span>
-            <span class="tag">25+ cities</span>
+        </a>
+        <a class="portal-card-link" href="portals/booking.html">
+          <div class="portal-card">
+            <h3>Booking.com</h3>
+            <div class="country">🌍 Global</div>
+            <div class="tags">
+              <span class="tag green">Short-term</span>
+              <span class="tag">Compound nflt param</span>
+              <span class="tag">25+ cities</span>
+            </div>
+            <div class="view-code">View source code →</div>
           </div>
-        </div>
+        </a>
         <div class="portal-card">
           <h3>LiveOhana</h3>
           <div class="country">🇺🇸 United States</div>
@@ -451,15 +497,18 @@
             <span class="tag purple">Adapter</span>
           </div>
         </div>
-        <div class="portal-card">
-          <h3>Rightmove</h3>
-          <div class="country">🇬🇧 United Kingdom</div>
-          <div class="tags">
-            <span class="tag green">Buy</span>
-            <span class="tag green">Rent</span>
-            <span class="tag">17 cities</span>
+        <a class="portal-card-link" href="portals/rightmove.html">
+          <div class="portal-card">
+            <h3>Rightmove</h3>
+            <div class="country">🇬🇧 United Kingdom</div>
+            <div class="tags">
+              <span class="tag green">Buy</span>
+              <span class="tag green">Rent</span>
+              <span class="tag">17 cities</span>
+            </div>
+            <div class="view-code">View source code →</div>
           </div>
-        </div>
+        </a>
         <div class="portal-card">
           <h3>Hybel.no</h3>
           <div class="country">🇳🇴 Norway</div>
@@ -478,24 +527,30 @@
             <span class="tag">Feature codes</span>
           </div>
         </div>
-        <div class="portal-card">
-          <h3>Craigslist</h3>
-          <div class="country">🇺🇸 United States</div>
-          <div class="tags">
-            <span class="tag green">Buy</span>
-            <span class="tag green">Rent</span>
-            <span class="tag">40 cities</span>
+        <a class="portal-card-link" href="portals/craigslist.html">
+          <div class="portal-card">
+            <h3>Craigslist</h3>
+            <div class="country">🇺🇸 United States</div>
+            <div class="tags">
+              <span class="tag green">Buy</span>
+              <span class="tag green">Rent</span>
+              <span class="tag">40 cities</span>
+            </div>
+            <div class="view-code">View source code →</div>
           </div>
-        </div>
-        <div class="portal-card">
-          <h3>Domain</h3>
-          <div class="country">🇦🇺 Australia</div>
-          <div class="tags">
-            <span class="tag green">Buy</span>
-            <span class="tag green">Rent</span>
-            <span class="tag">15 features</span>
+        </a>
+        <a class="portal-card-link" href="portals/domain.html">
+          <div class="portal-card">
+            <h3>Domain</h3>
+            <div class="country">🇦🇺 Australia</div>
+            <div class="tags">
+              <span class="tag green">Buy</span>
+              <span class="tag green">Rent</span>
+              <span class="tag">15 features</span>
+            </div>
+            <div class="view-code">View source code →</div>
           </div>
-        </div>
+        </a>
         <div class="portal-card">
           <h3>Hjem.no</h3>
           <div class="country">🇳🇴 Norway</div>
@@ -574,6 +629,9 @@
 
 <span class="comment">// → https://www.finn.no/realestate/lettings/search.html?location=0.20061&amp;price_to=15000&amp;min_bedrooms=2&amp;facilities=1&amp;facilities=4&amp;animals_allowed=1</span></code></pre>
     </section>
+
+<!-- Showcases removed - see individual portal sub-pages at portals/*.html -->
+
 
     <section class="use-cases">
       <h2>Built For</h2>

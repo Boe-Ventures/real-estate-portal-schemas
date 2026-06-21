@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Craigslist — Real Estate Portal Schema | Query Parameters, Zod Schema & URL Serializer</title>
+  <meta name="description" content="Complete Craigslist (United States) query parameter schema with Zod types, URL serializer, and verified location codes. Part of @use_homi/real-estate-portal-schemas.">
+  <link rel="canonical" href="https://boe-ventures.github.io/real-estate-portal-schemas/portals/craigslist.html">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --fg: #e5e5e5;
+      --muted: #737373;
+      --accent: #3b82f6;
+      --accent-hover: #60a5fa;
+      --border: #262626;
+      --card-bg: #141414;
+      --code-bg: #1c1c1c;
+      --green: #22c55e;
+      --purple: #a78bfa;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); }
+    .back { display: inline-block; margin: 24px 0; font-size: 0.9rem; }
+    header { padding: 16px 0 32px; border-bottom: 1px solid var(--border); }
+    header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+    .header-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .flag { font-size: 1.5rem; }
+    .country { color: var(--muted); font-size: 0.95rem; }
+    .pattern-pill {
+      background: #1e1033; border: 1px solid #5b21b6; color: var(--purple);
+      border-radius: 20px; padding: 3px 12px; font-size: 0.75rem;
+      font-weight: 500; white-space: nowrap;
+    }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      background: var(--code-bg); border: 1px solid var(--border);
+      border-radius: 4px; padding: 2px 8px; font-size: 0.75rem; color: var(--muted);
+    }
+    .tag.green { color: var(--green); border-color: #166534; background: #052e16; }
+    .install {
+      margin: 24px 0; background: var(--code-bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem;
+      color: var(--green); user-select: all;
+    }
+    .import-path {
+      margin: 0 0 32px; background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem;
+    }
+    section { padding: 32px 0; border-top: 1px solid var(--border); }
+    section:first-of-type { border-top: none; }
+    section h2 { font-size: 1.3rem; margin-bottom: 16px; }
+    section h3 { font-size: 1rem; margin: 20px 0 8px; color: var(--muted); }
+    pre {
+      background: var(--code-bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 20px; overflow-x: auto;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.82rem; line-height: 1.7; margin-bottom: 16px;
+      max-height: 600px; overflow-y: auto;
+    }
+    pre.expanded { max-height: none; }
+    .expand-btn {
+      display: none; background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 6px 16px; color: var(--accent);
+      cursor: pointer; font-size: 0.8rem; margin: -8px 0 16px;
+    }
+    .expand-btn:hover { background: var(--code-bg); }
+    code { color: var(--fg); }
+    .keyword { color: #c084fc; }
+    .string { color: #86efac; }
+    .comment { color: #525252; }
+    .fn { color: #60a5fa; }
+    .type { color: #fbbf24; }
+    .number { color: #f472b6; }
+    footer {
+      padding: 32px 0; border-top: 1px solid var(--border);
+      color: var(--muted); font-size: 0.85rem;
+    }
+    .toc { margin: 24px 0; }
+    .toc a { display: inline-block; margin-right: 16px; font-size: 0.85rem; }
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      pre { font-size: 0.75rem; padding: 12px; }
+    }
+</style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="../">← Back to all portals</a>
+    
+    <header>
+      <div class="header-meta">
+        <span class="flag">🇺🇸</span>
+        <span class="country">United States</span>
+        <span class="pattern-pill">Subdomain City · Query Params</span>
+      </div>
+      <h1>Craigslist</h1>
+      <div class="tags">
+        <span class="tag green">Buy</span>
+            <span class="tag green">Rent</span>
+            <span class="tag">40 cities</span>
+            <span class="tag">Subdomain City</span>
+      </div>
+    </header>
+    
+    <div class="install">npm install @use_homi/real-estate-portal-schemas</div>
+    <div class="import-path">
+      <span style="color: var(--muted);">import</span> { <span style="color: var(--fg);">craigslistConfig</span>, CRAIGSLIST_HOUSING_TYPES, CRAIGSLIST_LAUNDRY } <span style="color: var(--muted);">from</span> <span style="color: var(--green);">"@use_homi/real-estate-portal-schemas/craigslist"</span>
+    </div>
+
+    <section id="example">
+      <h2>⚡ Quick Example</h2>
+      <pre><code>import { craigslistConfig } from "@use_homi/real-estate-portal-schemas/craigslist";
+
+const url = craigslistConfig.serialize(craigslistConfig.baseUrls.rent!, {
+  city: "newyork",
+  min_price: 1500,
+  max_price: 3500,
+  min_bedrooms: 1,
+  laundry: ["1"],            // W/D in unit
+  pets_cat: "1",
+});
+
+console.log(url);
+// → https://newyork.craigslist.org/search/apa?min_price=1500&amp;max_price=3500&amp;min_bedrooms=1&amp;...</code></pre>
+    </section>
+
+    <nav class="toc">
+      <a href="#constants">Constants & Enums</a>
+      <a href="#schema">Zod Schema</a>
+      <a href="#serializer">Serializer</a>
+      <a href="#config">Config & Known Locations</a>
+    </nav>
+    
+    <section id="constants">
+      <h2>📋 Constants & Enums</h2>
+      <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 16px;">Named constants for opaque codes. These are the hard-won mappings.</p>
+      <pre><code>export const CRAIGSLIST_HOUSING_TYPES = {
+  /** Apartment */
+  APARTMENT: "1",
+  /** Condo */
+  CONDO: "2",
+  /** Cottage/Cabin */
+  COTTAGE: "3",
+  /** Duplex */
+  DUPLEX: "4",
+  /** Flat */
+  FLAT: "5",
+  /** House */
+  HOUSE: "6",
+  /** In-law */
+  IN_LAW: "7",
+  /** Loft */
+  LOFT: "8",
+  /** Townhouse */
+  TOWNHOUSE: "9",
+  /** Manufactured */
+  MANUFACTURED: "10",
+  /** Assisted living */
+  ASSISTED_LIVING: "11",
+  /** Land */
+  LAND: "12",
+} as const;
+
+export const CRAIGSLIST_LAUNDRY = {
+  /** W/D in unit */
+  IN_UNIT: "1",
+  /** W/D hookups */
+  HOOKUPS: "2",
+  /** Laundry in building */
+  IN_BUILDING: "3",
+  /** Laundry on site */
+  ON_SITE: "4",
+  /** No laundry on site */
+  NONE: "5",
+} as const;
+
+export const CRAIGSLIST_PARKING = {
+  /** Carport */
+  CARPORT: "1",
+  /** Attached garage */
+  ATTACHED_GARAGE: "2",
+  /** Detached garage */
+  DETACHED_GARAGE: "3",
+  /** Off-street parking */
+  OFF_STREET: "4",
+  /** Street parking */
+  STREET: "5",
+  /** Valet parking */
+  VALET: "6",
+  /** No parking */
+  NONE: "7",
+} as const;</code></pre>
+    </section>
+
+    <section id="schema">
+      <h2>🎯 Zod Schema</h2>
+      <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 16px;">Every query parameter with type, validation, and .describe() hints for AI.</p>
+      <pre><code>// ============================================================================
+
+// ---------------------------------------------------------------------------
+// Housing type codes
+// ---------------------------------------------------------------------------
+
+export const CRAIGSLIST_HOUSING_TYPES = {
+  /** Apartment */
+  APARTMENT: "1",
+  /** Condo */
+  CONDO: "2",
+  /** Cottage/Cabin */
+  COTTAGE: "3",
+  /** Duplex */
+  DUPLEX: "4",
+  /** Flat */
+  FLAT: "5",
+  /** House */
+  HOUSE: "6",
+  /** In-law */
+  IN_LAW: "7",
+  /** Loft */
+  LOFT: "8",
+  /** Townhouse */
+  TOWNHOUSE: "9",
+  /** Manufactured */
+  MANUFACTURED: "10",
+  /** Assisted living */
+  ASSISTED_LIVING: "11",
+  /** Land */
+  LAND: "12",
+} as const;
+
+// ---------------------------------------------------------------------------
+// Laundry options
+// ---------------------------------------------------------------------------
+
+export const CRAIGSLIST_LAUNDRY = {
+  /** W/D in unit */
+  IN_UNIT: "1",
+  /** W/D hookups */
+  HOOKUPS: "2",
+  /** Laundry in building */
+  IN_BUILDING: "3",
+  /** Laundry on site */
+  ON_SITE: "4",
+  /** No laundry on site */
+  NONE: "5",
+} as const;
+
+// ---------------------------------------------------------------------------
+// Parking options
+// ---------------------------------------------------------------------------
+
+export const CRAIGSLIST_PARKING = {
+  /** Carport */
+  CARPORT: "1",
+  /** Attached garage */
+  ATTACHED_GARAGE: "2",
+  /** Detached garage */
+  DETACHED_GARAGE: "3",
+  /** Off-street parking */
+  OFF_STREET: "4",
+  /** Street parking */
+  STREET: "5",
+  /** Valet parking */
+  VALET: "6",
+  /** No parking */
+  NONE: "7",
+} as const;
+
+// ---------------------------------------------------------------------------
+// Zod schema
+// ---------------------------------------------------------------------------
+
+export const craigslistParamsSchema = z.object({
+  // --- City subdomain ---
+  city: z
+    .string()
+    .describe(
+      "City subdomain. Examples: 'newyork', 'sfbay', 'losangeles', 'chicago', " +
+        "'seattle', 'boston', 'miami', 'denver', 'portland', 'austin', 'washingtondc'. " +
+        "Use knownLocations for the full mapping.",
+    ),
+
+  // --- Category ---
+  category: z
+    .enum(["apa", "rea", "sub", "roo", "hhh"])
+    .default("apa")
+    .describe(
+      "Search category. 'apa' = apartments/housing for rent (default), " +
+        "'rea' = real estate for sale, 'sub' = sublets/temporary, " +
+        "'roo' = rooms/shared, 'hhh' = all housing.",
+    ),
+
+  // --- Price ---
+  min_price: z
+    .number()
+    .optional()
+    .describe("Minimum price. Rent: monthly. Sale: total price."),
+  max_price: z
+    .number()
+    .optional()
+    .describe("Maximum price."),
+
+  // --- Bedrooms ---
+  min_bedrooms: z
+    .number()
+    .optional()
+    .describe("Minimum bedrooms (1-8)."),
+  max_bedrooms: z
+    .number()
+    .optional()
+    .describe("Maximum bedrooms (1-8)."),
+
+  // --- Bathrooms ---
+  min_bathrooms: z
+    .number()
+    .optional()
+    .describe("Minimum bathrooms (1-8)."),
+
+  // --- Square footage ---
+  min_sqft: z
+    .number()
+    .optional()
+    .describe("Minimum square footage. May be silently ignored by some city pages."),
+  max_sqft: z
+    .number()
+    .optional()
+    .describe("Maximum square footage."),
+
+  // --- Housing type ---
+  housing_type: z
+    .array(z.string())
+    .optional()
+    .describe(
+      "Housing type codes (can select multiple, repeated param). " +
+        "1=apartment, 2=condo, 3=cottage, 4=duplex, 5=flat, " +
+        "6=house, 7=in-law, 8=loft, 9=townhouse, 10=manufactured, " +
+        "11=assisted living, 12=land.",
+    ),
+
+  // --- Pets ---
+  pets_cat: z
+    .enum(["1"])
+    .optional()
+    .describe("Cats allowed. Set to '1' to filter."),
+  pets_dog: z
+    .enum(["1"])
+    .optional()
+    .describe("Dogs allowed. Set to '1' to filter."),
+
+  // --- Laundry ---
+  laundry: z
+    .array(z.string())
+    .optional()
+    .describe(
+      "Laundry options (can select multiple, repeated param). " +
+        "1=W/D in unit, 2=W/D hookups, 3=laundry in bldg, " +
+        "4=laundry on site, 5=no laundry.",
+    ),
+
+  // --- Parking ---
+  parking: z
+    .array(z.string())
+    .optional()
+    .describe(
+      "Parking options (can select multiple, repeated param). " +
+        "1=carport, 2=attached garage, 3=detached garage, " +
+        "4=off-street, 5=street, 6=valet, 7=no parking.",
+    ),
+
+  // --- Other filters ---
+  no_smoking: z
+    .enum(["1"])
+    .optional()
+    .describe("No smoking. Set to '1'."),
+  is_furnished: z
+    .enum(["1"])
+    .optional()
+    .describe("Furnished only. Set to '1'."),
+  wheelchaccess: z
+    .enum(["1"])
+    .optional()
+    .describe("Wheelchair accessible. Set to '1'."),
+  airconditioning: z
+    .enum(["1"])
+    .optional()
+    .describe("Has air conditioning. Set to '1'."),
+  ev_charging: z
+    .enum(["1"])
+    .optional()
+    .describe("Has EV charging. Set to '1'."),
+
+  // --- Availability ---
+  availabilityMode: z
+    .enum(["0"])
+    .optional()
+    .describe("Set to '0' to show listings with specific availability dates."),
+
+  // --- Search query ---
+  query: z
+    .string()
+    .optional()
+    .describe("Free-text keyword search."),
+
+  // --- Sort &amp; pagination ---
+  sort: z
+    .enum(["date", "priceasc", "pricedsc"])
+    .optional()
+    .describe("Sort order. 'date' = newest, 'priceasc' = cheapest, 'pricedsc' = most expensive."),
+
+  postedToday: z
+    .enum(["1"])
+    .optional()
+    .describe("Only show listings posted today. Set to '1'."),
+});
+
+export type CraigslistParams = z.infer&lt;typeof craigslistParamsSchema&gt;;
+
+// ---------------------------------------------------------------------------
+// Serializer
+// ---------------------------------------------------------------------------
+
+function serializeCraigslistUrl(baseUrl: string, params: unknown): string {
+  const p = params as CraigslistParams &amp; { city?: string; category?: string };
+
+  const city = p.city || "newyork";
+  const category = p.category || "apa";
+  const urlBase = `https://${city}.craigslist.org/search/${category}`;
+
+  // Build query params (exclude city and category)
+  const queryParams: Record&lt;string, unknown&gt; = { ...p };
+  delete queryParams.city;
+  delete queryParams.category;
+
+  return serializeAsQueryParams(urlBase, queryParams);
+}
+
+// ---------------------------------------------------------------------------
+// Provider config
+// ---------------------------------------------------------------------------
+
+export const craigslistConfig: ProviderUrlConfig = {
+  id: "craigslist.org",
+  name: "Craigslist",
+  baseUrls: {
+    rent: "https://craigslist.org",
+    buy: "https://craigslist.org",
+    // Short-term maps to the sublets/temporary category — set `category: "sub"`.
+    rent_short: "https://craigslist.org",
+  },
+  params: craigslistParamsSchema,
+  serialize: serializeCraigslistUrl,
+  knownLocations: {
+    // Major US cities — city subdomain mapping
+    "New York": "newyork",
+    "San Francisco": "sfbay",
+    "Los Angeles": "losangeles",
+    "Chicago": "chicago",
+    "Seattle": "seattle",
+    "Boston": "boston",
+    "Miami": "miami",
+    "Denver": "denver",
+    "Portland": "portland",
+    "Austin": "austin",
+    "Washington DC": "washingtondc",
+    "Houston": "houston",
+    "Dallas": "dallas",
+    "Philadelphia": "philadelphia",
+    "Phoenix": "phoenix",
+    "San Diego": "sandiego",
+    "San Jose": "sanjose",
+    "Atlanta": "atlanta",
+    "Minneapolis": "minneapolis",
+    "Nashville": "nashville",
+    "Detroit": "detroit",
+    "Las Vegas": "lasvegas",
+    "Baltimore": "baltimore",
+    "Raleigh": "raleigh",
+    "Tampa": "tampa",
+    "Honolulu": "honolulu",
+    "New Orleans": "neworleans",
+    "Salt Lake City": "saltlakecity",
+    "Pittsburgh": "pittsburgh",
+    "Columbus": "columbus",
+    "Charlotte": "charlotte",
+    "Indianapolis": "indianapolis",
+    "Orlando": "orlando",
+    "St. Louis": "stlouis",
+    "Cincinnati": "cincinnati",
+    "Cleveland": "cleveland",
+    "Kansas City": "kansascity",
+    "Milwaukee": "milwaukee",
+    "Tucson": "tucson",
+    "Sacramento": "sacramento",
+    "Boulder": "boulder",
+  },
+  promptGuidance: [
+    "- `city` is the subdomain (e.g. 'newyork', 'sfbay') — always set it from knownLocations.",
+    "- Category by intention: rent → 'apa' (apartments/housing), buy → 'rea' (real estate for sale), short-term → 'sub' (sublets/temporary).",
+    "- `min_price`/`max_price` are monthly for rent and total for sale. Set `max_price` from the user's budget; only set `min_price` if they gave a floor.",
+  ].join("\n"),
+  jsonLd: {
+    types: [],
+    available: false,
+    notes:
+      "Craigslist uses minimal HTML markup with no structured data. " +
+      "No JSON-LD, no schema.org annotations. Listing data must be extracted from raw HTML.",
+  },
+};
+
+export const craigslistParamsSchema = z.object({
+  // --- City subdomain ---
+  city: z
+    .string()
+    .describe(
+      "City subdomain. Examples: 'newyork', 'sfbay', 'losangeles', 'chicago', " +
+        "'seattle', 'boston', 'miami', 'denver', 'portland', 'austin', 'washingtondc'. " +
+        "Use knownLocations for the full mapping.",
+    ),
+
+  // --- Category ---
+  category: z
+    .enum(["apa", "rea", "sub", "roo", "hhh"])
+    .default("apa")
+    .describe(
+      "Search category. 'apa' = apartments/housing for rent (default), " +
+        "'rea' = real estate for sale, 'sub' = sublets/temporary, " +
+        "'roo' = rooms/shared, 'hhh' = all housing.",
+    ),
+
+  // --- Price ---
+  min_price: z
+    .number()
+    .optional()
+    .describe("Minimum price. Rent: monthly. Sale: total price."),
+  max_price: z
+    .number()
+    .optional()
+    .describe("Maximum price."),
+
+  // --- Bedrooms ---
+  min_bedrooms: z
+    .number()
+    .optional()
+    .describe("Minimum bedrooms (1-8)."),
+  max_bedrooms: z
+    .number()
+    .optional()
+    .describe("Maximum bedrooms (1-8)."),
+
+  // --- Bathrooms ---
+  min_bathrooms: z
+    .number()
+    .optional()
+    .describe("Minimum bathrooms (1-8)."),
+
+  // --- Square footage ---
+  min_sqft: z
+    .number()
+    .optional()
+    .describe("Minimum square footage. May be silently ignored by some city pages."),
+  max_sqft: z
+    .number()
+    .optional()
+    .describe("Maximum square footage."),
+
+  // --- Housing type ---
+  housing_type: z
+    .array(z.string())
+    .optional()
+    .describe(
+      "Housing type codes (can select multiple, repeated param). " +
+        "1=apartment, 2=condo, 3=cottage, 4=duplex, 5=flat, " +
+        "6=house, 7=in-law, 8=loft, 9=townhouse, 10=manufactured, " +
+        "11=assisted living, 12=land.",
+    ),
+
+  // --- Pets ---
+  pets_cat: z
+    .enum(["1"])
+    .optional()
+    .describe("Cats allowed. Set to '1' to filter."),
+  pets_dog: z
+    .enum(["1"])
+    .optional()
+    .describe("Dogs allowed. Set to '1' to filter."),
+
+  // --- Laundry ---
+  laundry: z
+    .array(z.string())
+    .optional()
+    .describe(
+      "Laundry options (can select multiple, repeated param). " +
+        "1=W/D in unit, 2=W/D hookups, 3=laundry in bldg, " +
+        "4=laundry on site, 5=no laundry.",
+    ),
+
+  // --- Parking ---
+  parking: z
+    .array(z.string())
+    .optional()
+    .describe(
+      "Parking options (can select multiple, repeated param). " +
+        "1=carport, 2=attached garage, 3=detached garage, " +
+        "4=off-street, 5=street, 6=valet, 7=no parking.",
+    ),
+
+  // --- Other filters ---
+  no_smoking: z
+    .enum(["1"])
+    .optional()
+    .describe("No smoking. Set to '1'."),
+  is_furnished: z
+    .enum(["1"])
+    .optional()
+    .describe("Furnished only. Set to '1'."),
+  wheelchaccess: z
+    .enum(["1"])
+    .optional()
+    .describe("Wheelchair accessible. Set to '1'."),
+  airconditioning: z
+    .enum(["1"])
+    .optional()
+    .describe("Has air conditioning. Set to '1'."),
+  ev_charging: z
+    .enum(["1"])
+    .optional()
+    .describe("Has EV charging. Set to '1'."),
+
+  // --- Availability ---
+  availabilityMode: z
+    .enum(["0"])
+    .optional()
+    .describe("Set to '0' to show listings with specific availability dates."),
+
+  // --- Search query ---
+  query: z
+    .string()
+    .optional()
+    .describe("Free-text keyword search."),
+
+  // --- Sort &amp; pagination ---
+  sort: z
+    .enum(["date", "priceasc", "pricedsc"])
+    .optional()
+    .describe("Sort order. 'date' = newest, 'priceasc' = cheapest, 'pricedsc' = most expensive."),
+
+  postedToday: z
+    .enum(["1"])
+    .optional()
+    .describe("Only show listings posted today. Set to '1'."),
+});
+
+export type CraigslistParams = z.infer&lt;typeof craigslistParamsSchema&gt;;</code></pre>
+    </section>
+
+    <section id="serializer">
+      <h2>🔗 Serializer</h2>
+      <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 16px;">How structured params become a valid search URL.</p>
+      <pre><code>function serializeCraigslistUrl(baseUrl: string, params: unknown): string {
+  const p = params as CraigslistParams &amp; { city?: string; category?: string };
+
+  const city = p.city || "newyork";
+  const category = p.category || "apa";
+  const urlBase = `https://${city}.craigslist.org/search/${category}`;
+
+  // Build query params (exclude city and category)
+  const queryParams: Record&lt;string, unknown&gt; = { ...p };
+  delete queryParams.city;
+  delete queryParams.category;
+
+  return serializeAsQueryParams(urlBase, queryParams);
+}</code></pre>
+    </section>
+
+    <section id="config">
+      <h2>⚙️ Config & Known Locations</h2>
+      <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 16px;">Base URLs, verified location codes, and AI prompt guidance.</p>
+      <pre><code>export const craigslistConfig: ProviderUrlConfig = {
+  id: "craigslist.org",
+  name: "Craigslist",
+  baseUrls: {
+    rent: "https://craigslist.org",
+    buy: "https://craigslist.org",
+    // Short-term maps to the sublets/temporary category — set `category: "sub"`.
+    rent_short: "https://craigslist.org",
+  },
+  params: craigslistParamsSchema,
+  serialize: serializeCraigslistUrl,
+  knownLocations: {
+    // Major US cities — city subdomain mapping
+    "New York": "newyork",
+    "San Francisco": "sfbay",
+    "Los Angeles": "losangeles",
+    "Chicago": "chicago",
+    "Seattle": "seattle",
+    "Boston": "boston",
+    "Miami": "miami",
+    "Denver": "denver",
+    "Portland": "portland",
+    "Austin": "austin",
+    "Washington DC": "washingtondc",
+    "Houston": "houston",
+    "Dallas": "dallas",
+    "Philadelphia": "philadelphia",
+    "Phoenix": "phoenix",
+    "San Diego": "sandiego",
+    "San Jose": "sanjose",
+    "Atlanta": "atlanta",
+    "Minneapolis": "minneapolis",
+    "Nashville": "nashville",
+    "Detroit": "detroit",
+    "Las Vegas": "lasvegas",
+    "Baltimore": "baltimore",
+    "Raleigh": "raleigh",
+    "Tampa": "tampa",
+    "Honolulu": "honolulu",
+    "New Orleans": "neworleans",
+    "Salt Lake City": "saltlakecity",
+    "Pittsburgh": "pittsburgh",
+    "Columbus": "columbus",
+    "Charlotte": "charlotte",
+    "Indianapolis": "indianapolis",
+    "Orlando": "orlando",
+    "St. Louis": "stlouis",
+    "Cincinnati": "cincinnati",
+    "Cleveland": "cleveland",
+    "Kansas City": "kansascity",
+    "Milwaukee": "milwaukee",
+    "Tucson": "tucson",
+    "Sacramento": "sacramento",
+    "Boulder": "boulder",
+  },
+  promptGuidance: [
+    "- `city` is the subdomain (e.g. 'newyork', 'sfbay') — always set it from knownLocations.",
+    "- Category by intention: rent → 'apa' (apartments/housing), buy → 'rea' (real estate for sale), short-term → 'sub' (sublets/temporary).",
+    "- `min_price`/`max_price` are monthly for rent and total for sale. Set `max_price` from the user's budget; only set `min_price` if they gave a floor.",
+  ].join("\n"),
+  jsonLd: {
+    types: [],
+    available: false,
+    notes:
+      "Craigslist uses minimal HTML markup with no structured data. " +
+      "No JSON-LD, no schema.org annotations. Listing data must be extracted from raw HTML.",
+  },
+};</code></pre>
+    </section>
+
+    <footer>
+      <p>Part of <a href="https://www.npmjs.com/package/@use_homi/real-estate-portal-schemas">@use_homi/real-estate-portal-schemas</a> — built by <a href="https://homi.so">Homi</a>.</p>
+      <p style="margin-top: 8px;"><a href="https://github.com/Boe-Ventures/real-estate-portal-schemas">GitHub</a> · <a href="../">All Portals</a></p>
+    </footer>
+  </div>
+  
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('pre code').forEach(function(block) {
+    var code = block.innerHTML;
+    // Tokenize to avoid conflicts
+    var tokens = [];
+    var i = 0;
+    while (i < code.length) {
+      // HTML tags (preserve existing spans)
+      if (code[i] === '<') {
+        var end = code.indexOf('>', i);
+        if (end !== -1) {
+          tokens.push({ type: 'html', text: code.slice(i, end + 1) });
+          i = end + 1;
+          continue;
+        }
+      }
+      // Line comments
+      if (code[i] === '/' && code[i+1] === '/') {
+        var nlPos = code.indexOf('\n', i);
+        var commentEnd = nlPos === -1 ? code.length : nlPos;
+        tokens.push({ type: 'comment', text: code.slice(i, commentEnd) });
+        i = commentEnd;
+        continue;
+      }
+      // Block comments
+      if (code[i] === '/' && code[i+1] === '*') {
+        var bcEnd = code.indexOf('*/', i + 2);
+        bcEnd = bcEnd === -1 ? code.length : bcEnd + 2;
+        tokens.push({ type: 'comment', text: code.slice(i, bcEnd) });
+        i = bcEnd;
+        continue;
+      }
+      // Double-quoted strings
+      if (code[i] === '&' && code.slice(i, i+6) === '&quot;') {
+        var si = i + 6;
+        while (si < code.length) {
+          if (code[si] === '\\') { si += 2; continue; }
+          if (code.slice(si, si+6) === '&quot;') { si += 6; break; }
+          si++;
+        }
+        tokens.push({ type: 'string', text: code.slice(i, si) });
+        i = si;
+        continue;
+      }
+      // Regular double-quoted strings
+      if (code[i] === '"') {
+        var si = i + 1;
+        while (si < code.length && code[si] !== '"') {
+          if (code[si] === '\\') si++;
+          si++;
+        }
+        tokens.push({ type: 'string', text: code.slice(i, si + 1) });
+        i = si + 1;
+        continue;
+      }
+      // Single-quoted strings
+      if (code[i] === "'") {
+        var si = i + 1;
+        while (si < code.length && code[si] !== "'") {
+          if (code[si] === '\\') si++;
+          si++;
+        }
+        tokens.push({ type: 'string', text: code.slice(i, si + 1) });
+        i = si + 1;
+        continue;
+      }
+      // Backtick template literals
+      if (code[i] === '`') {
+        var si = i + 1;
+        while (si < code.length && code[si] !== '`') {
+          if (code[si] === '\\') si++;
+          si++;
+        }
+        tokens.push({ type: 'string', text: code.slice(i, si + 1) });
+        i = si + 1;
+        continue;
+      }
+      // Numbers
+      if (/[0-9]/.test(code[i]) && (i === 0 || /[\s:,=([{+\-*\/|&!<>]/.test(code[i-1]))) {
+        var ni = i;
+        while (ni < code.length && /[0-9._]/.test(code[ni])) ni++;
+        tokens.push({ type: 'number', text: code.slice(i, ni) });
+        i = ni;
+        continue;
+      }
+      // Words (keywords, identifiers)
+      if (/[a-zA-Z_$]/.test(code[i])) {
+        var wi = i;
+        while (wi < code.length && /[a-zA-Z0-9_$]/.test(code[wi])) wi++;
+        var word = code.slice(i, wi);
+        var keywords = ['import','from','export','const','let','var','function','return','if','else','as','new','true','false','null','undefined','typeof','async','await','type','interface','enum','extends','implements','class','static','readonly','void','delete','throw','try','catch','finally','for','while','do','switch','case','break','continue','default','in','of','instanceof','yield'];
+        if (keywords.indexOf(word) !== -1) {
+          tokens.push({ type: 'keyword', text: word });
+        } else if (wi < code.length && code[wi] === '(') {
+          tokens.push({ type: 'fn', text: word });
+        } else {
+          tokens.push({ type: 'plain', text: word });
+        }
+        i = wi;
+        continue;
+      }
+      tokens.push({ type: 'plain', text: code[i] });
+      i++;
+    }
+    // Rebuild
+    block.innerHTML = tokens.map(function(t) {
+      if (t.type === 'html' || t.type === 'plain') return t.text;
+      return '<span class="' + t.type + '">' + t.text + '</span>';
+    }).join('');
+  });
+
+  // Show expand buttons for tall code blocks
+  document.querySelectorAll('pre').forEach(function(pre) {
+    if (pre.scrollHeight > 620) {
+      var btn = document.createElement('button');
+      btn.className = 'expand-btn';
+      btn.textContent = '↓ Show all (' + pre.querySelectorAll('code')[0].textContent.split('\n').length + ' lines)';
+      btn.style.display = 'block';
+      btn.onclick = function() {
+        pre.classList.toggle('expanded');
+        btn.textContent = pre.classList.contains('expanded') ? '↑ Collapse' : '↓ Show all';
+      };
+      pre.after(btn);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
