@@ -936,6 +936,12 @@ export const streetEasyConfig: ProviderUrlConfig = {
   },
   params: streetEasyParamsSchema,
   serialize: serializeStreetEasyUrl,
+  // Curated subset of STREETEASY_AREAS: the popular/high-demand neighborhoods
+  // the AI sees in its URL-generation prompt. Intentionally NOT the full
+  // ~400-entry table — a focused list keeps the prompt cheap and the model
+  // accurate. The exhaustive table lives in STREETEASY_AREAS for direct
+  // lookup; add an entry here only when a neighborhood is common enough that
+  // searchers actually name it.
   knownLocations: {
     // === Manhattan — verified 2026-05-10 ===
     "Manhattan (all)": "100",

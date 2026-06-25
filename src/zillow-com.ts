@@ -367,6 +367,14 @@ export const zillowConfig: ProviderUrlConfig = {
   },
   params: zillowParamsSchema,
   serialize: serializeZillowUrl,
+  // Curated set of popular cities + neighborhoods the AI sees in its
+  // URL-generation prompt. Region IDs are sourced from Zillow's autocomplete
+  // API (no full reference table exists for Zillow — this list IS the source
+  // of truth). Intentionally kept focused: a smaller, high-demand set keeps
+  // the prompt cheap and the model accurate. Add an entry only when a place
+  // is common enough that searchers actually name it. Note the two entry
+  // formats are NOT interchangeable (see promptGuidance): whole-city entries
+  // pair with regionType 6, neighborhood entries with regionType 7.
   knownLocations: {
     // === Cities (regionType: 6) ===
     "New York, NY (new-york-ny)": "6181",
